@@ -66,10 +66,10 @@ const creditTransactionSchema = new Schema(
 
 creditTransactionSchema.index({ userId: 1, createdAt: -1 });
 
-export type WalletDoc = InferSchemaType<typeof walletSchema> & { _id: string };
+export type WalletDoc = InferSchemaType<typeof walletSchema>;
 export type CreditTransactionDoc = InferSchemaType<
   typeof creditTransactionSchema
-> & { _id: string };
+>;
 
 export const Wallet: Model<WalletDoc> =
   (models.Wallet as Model<WalletDoc>) ?? model<WalletDoc>("Wallet", walletSchema);

@@ -1,3 +1,4 @@
+import ArtisanProfileSubmitted from "@/emails/artisan-profile-submitted";
 import PasswordReset from "@/emails/password-reset";
 import VerifyEmailOtp from "@/emails/verify-email-otp";
 import WelcomeArtisan from "@/emails/welcome-artisan";
@@ -58,6 +59,16 @@ export function sendWelcomeCustomerEmail(user: Recipient) {
       name: user.name,
       browseUrl: url(ROUTES.directory),
     }),
+  });
+}
+
+export function sendProfileSubmittedEmail(user: Recipient) {
+  queueEmail({
+    userId: user.userId,
+    to: user.email,
+    subject: "We've got your Fixam profile",
+    type: "artisan-profile-submitted",
+    react: ArtisanProfileSubmitted({ name: user.name }),
   });
 }
 

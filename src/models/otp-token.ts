@@ -41,9 +41,7 @@ otpTokenSchema.index({ expiresAt: 1 }, { expireAfterSeconds: 0 });
 // Lookup path for verification: newest live token for this user + purpose.
 otpTokenSchema.index({ userId: 1, purpose: 1, consumedAt: 1, createdAt: -1 });
 
-export type OtpTokenDoc = InferSchemaType<typeof otpTokenSchema> & {
-  _id: string;
-};
+export type OtpTokenDoc = InferSchemaType<typeof otpTokenSchema>;
 
 export const OtpToken: Model<OtpTokenDoc> =
   (models.OtpToken as Model<OtpTokenDoc>) ??

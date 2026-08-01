@@ -90,7 +90,7 @@ reviewSchema.index({ artisanProfileId: 1, status: 1, createdAt: -1 });
 reviewSchema.index({ status: 1, createdAt: -1 });
 reviewSchema.index({ customerUserId: 1, createdAt: -1 });
 
-export type ReviewDoc = InferSchemaType<typeof reviewSchema> & { _id: string };
+export type ReviewDoc = InferSchemaType<typeof reviewSchema>;
 
 export const Review: Model<ReviewDoc> =
   (models.Review as Model<ReviewDoc>) ?? model<ReviewDoc>("Review", reviewSchema);

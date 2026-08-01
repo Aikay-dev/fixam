@@ -19,9 +19,7 @@ const rateLimitSchema = new Schema(
 
 rateLimitSchema.index({ expiresAt: 1 }, { expireAfterSeconds: 0 });
 
-export type RateLimitDoc = InferSchemaType<typeof rateLimitSchema> & {
-  _id: string;
-};
+export type RateLimitDoc = InferSchemaType<typeof rateLimitSchema>;
 
 export const RateLimit: Model<RateLimitDoc> =
   (models.RateLimit as Model<RateLimitDoc>) ??

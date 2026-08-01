@@ -49,9 +49,7 @@ const categorySchema = new Schema(
 categorySchema.index({ parentId: 1, order: 1 });
 categorySchema.index({ name: "text", synonyms: "text" });
 
-export type CategoryDoc = InferSchemaType<typeof categorySchema> & {
-  _id: string;
-};
+export type CategoryDoc = InferSchemaType<typeof categorySchema>;
 
 export const Category: Model<CategoryDoc> =
   (models.Category as Model<CategoryDoc>) ??

@@ -83,10 +83,8 @@ const auditLogSchema = new Schema(
 
 auditLogSchema.index({ createdAt: -1 });
 
-export type ReportDoc = InferSchemaType<typeof reportSchema> & { _id: string };
-export type AuditLogDoc = InferSchemaType<typeof auditLogSchema> & {
-  _id: string;
-};
+export type ReportDoc = InferSchemaType<typeof reportSchema>;
+export type AuditLogDoc = InferSchemaType<typeof auditLogSchema>;
 
 export const Report: Model<ReportDoc> =
   (models.Report as Model<ReportDoc>) ?? model<ReportDoc>("Report", reportSchema);

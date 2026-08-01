@@ -101,7 +101,7 @@ leadSchema.index({ customerUserId: 1, revealedAt: -1 });
 leadSchema.index({ revealedAt: -1 });
 leadSchema.index({ reviewPromptSentAt: 1, revealedAt: 1 });
 
-export type LeadDoc = InferSchemaType<typeof leadSchema> & { _id: string };
+export type LeadDoc = InferSchemaType<typeof leadSchema>;
 
 export const Lead: Model<LeadDoc> =
   (models.Lead as Model<LeadDoc>) ?? model<LeadDoc>("Lead", leadSchema);

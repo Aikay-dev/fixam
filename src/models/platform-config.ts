@@ -35,9 +35,7 @@ const platformConfigSchema = new Schema(
   { timestamps: true },
 );
 
-export type PlatformConfigDoc = InferSchemaType<typeof platformConfigSchema> & {
-  _id: string;
-};
+export type PlatformConfigDoc = InferSchemaType<typeof platformConfigSchema>;
 
 export const PlatformConfig: Model<PlatformConfigDoc> =
   (models.PlatformConfig as Model<PlatformConfigDoc>) ??

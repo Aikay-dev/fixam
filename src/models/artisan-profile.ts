@@ -217,9 +217,7 @@ artisanProfileSchema.index({
   searchKeywords: "text",
 });
 
-export type ArtisanProfileDoc = InferSchemaType<typeof artisanProfileSchema> & {
-  _id: string;
-};
+export type ArtisanProfileDoc = InferSchemaType<typeof artisanProfileSchema>;
 
 export const ArtisanProfile: Model<ArtisanProfileDoc> =
   (models.ArtisanProfile as Model<ArtisanProfileDoc>) ??

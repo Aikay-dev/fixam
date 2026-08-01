@@ -65,7 +65,10 @@ const userSchema = new Schema(
 
 userSchema.index({ createdAt: -1 });
 
-export type UserDoc = InferSchemaType<typeof userSchema> & { _id: string };
+// No manual `_id` — Mongoose supplies it as an ObjectId on both hydrated and
+// lean results. Declaring it as a string here makes `{ _id: { $in: [...] } }`
+// queries fail to type-check against real ObjectIds.
+export type UserDoc = InferSchemaType<typeof userSchema>;
 
 export const User: Model<UserDoc> =
   (models.User as Model<UserDoc>) ?? model<UserDoc>("User", userSchema);

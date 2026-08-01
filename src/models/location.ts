@@ -52,8 +52,8 @@ const lgaSchema = new Schema(
 // uniqueness constraint has to be scoped to the state.
 lgaSchema.index({ stateId: 1, slug: 1 }, { unique: true });
 
-export type StateDoc = InferSchemaType<typeof stateSchema> & { _id: string };
-export type LgaDoc = InferSchemaType<typeof lgaSchema> & { _id: string };
+export type StateDoc = InferSchemaType<typeof stateSchema>;
+export type LgaDoc = InferSchemaType<typeof lgaSchema>;
 
 export const State: Model<StateDoc> =
   (models.State as Model<StateDoc>) ?? model<StateDoc>("State", stateSchema);
