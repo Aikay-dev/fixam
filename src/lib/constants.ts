@@ -11,6 +11,14 @@ export const SITE = {
   locale: "en_NG",
   country: "NG",
   currency: "NGN",
+
+  /**
+   * The registrable domain. Kept here, and referenced everywhere, so a change
+   * is one edit rather than a hunt through email templates and error copy.
+   * The brand is "Fixam"; only the domain carries the hyphen.
+   */
+  domain: "fix-am.ng",
+  supportEmail: "support@fix-am.ng",
 } as const;
 
 // --- Roles ----------------------------------------------------------------

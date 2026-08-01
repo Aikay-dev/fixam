@@ -61,5 +61,5 @@ export default function WelcomeArtisan({
 
 WelcomeArtisan.PreviewProps = {
   name: "Emeka",
-  profileUrl: "https://fixam.ng/pro/profile",
+  profileUrl: "https://fix-am.ng/pro/profile",
 } satisfies WelcomeArtisanProps;

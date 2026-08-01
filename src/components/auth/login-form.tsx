@@ -13,7 +13,7 @@ import { GoogleButton } from "@/components/auth/google-button";
 import { Field, fieldA11y } from "@/components/forms/field";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { ROUTES } from "@/lib/constants";
+import { ROUTES, SITE } from "@/lib/constants";
 import { loginSchema, type LoginInput } from "@/lib/validation/auth";
 
 export function LoginForm({
@@ -56,7 +56,7 @@ export function LoginForm({
       // used to work out which emails are registered.
       if (result.error.includes("ACCOUNT_SUSPENDED")) {
         setFormError(
-          "This account has been suspended. Contact support@fixam.ng if you think that's a mistake.",
+          `This account has been suspended. Contact ${SITE.supportEmail} if you think that's a mistake.`,
         );
       } else {
         setFormError("That email and password don't match.");

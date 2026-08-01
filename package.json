@@ -11,6 +11,9 @@
     "seed": "tsx scripts/seed.ts",
     "verify:indexes": "tsx scripts/verify-indexes.ts",
     "test:dedupe": "tsx scripts/test-lead-dedupe.ts",
+    "test:scrape": "tsx scripts/test-scrape.ts",
+    "test:stage-two": "tsx --conditions=react-server scripts/test-stage-two-seam.ts",
+    "dev:approve": "tsx scripts/dev-approve.ts",
     "email": "email dev --dir src/emails"
   },
   "dependencies": {

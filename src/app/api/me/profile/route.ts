@@ -6,6 +6,7 @@ import {
   getOrCreateProfile,
   rebuildSearchKeywords,
 } from "@/lib/artisan/service";
+import { SITE } from "@/lib/constants";
 import { connectDB } from "@/lib/db";
 import { toOwnerArtisan } from "@/lib/serializers/artisan";
 import {
@@ -61,7 +62,7 @@ export async function PATCH(request: NextRequest) {
     if (profile.status === "suspended") {
       return fail(
         403,
-        "This profile is suspended. Contact support@fixam.ng.",
+        `This profile is suspended. Contact ${SITE.supportEmail}.`,
         "suspended",
       );
     }

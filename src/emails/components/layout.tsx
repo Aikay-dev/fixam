@@ -11,6 +11,8 @@ import {
 } from "@react-email/components";
 import type { ReactNode } from "react";
 
+import { clientEnv } from "@/lib/env";
+
 /**
  * Shared shell for every Fixam email.
  *
@@ -88,6 +90,9 @@ export function EmailLayout({
   footerNote,
 }: EmailLayoutProps) {
   const year = new Date().getFullYear();
+  // Read from config rather than hardcoded, so the footer links follow the
+  // site's actual domain in every environment.
+  const site = clientEnv.NEXT_PUBLIC_SITE_URL.replace(/\/$/, "");
 
   return (
     <Html lang="en">
@@ -121,11 +126,11 @@ export function EmailLayout({
             </Text>
             <Text style={styles.footerText}>
               &copy; {year} Fixam ·{" "}
-              <Link href="https://fixam.ng/legal/privacy" style={styles.link}>
+              <Link href={`${site}/legal/privacy`} style={styles.link}>
                 Privacy
               </Link>{" "}
               ·{" "}
-              <Link href="https://fixam.ng/legal/terms" style={styles.link}>
+              <Link href={`${site}/legal/terms`} style={styles.link}>
                 Terms
               </Link>
             </Text>

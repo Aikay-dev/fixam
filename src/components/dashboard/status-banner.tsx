@@ -8,7 +8,7 @@ import {
 import Link from "next/link";
 
 import { Button } from "@/components/ui/button";
-import type { ArtisanStatus } from "@/lib/constants";
+import { SITE, type ArtisanStatus } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 
 /**
@@ -76,7 +76,7 @@ export function ArtisanStatusBanner({
       title: "Profile suspended",
       body: rejectionReason
         ? rejectionReason
-        : "This profile has been suspended. Email support@fixam.ng if you think that's a mistake.",
+        : `This profile has been suspended. Email ${SITE.supportEmail} if you think that's a mistake.`,
       className: "border-destructive/30 bg-destructive/10 text-destructive",
     },
   };

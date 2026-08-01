@@ -21,7 +21,7 @@ const serverSchema = z.object({
 
   // Resend
   RESEND_API_KEY: z.string().optional(),
-  EMAIL_FROM: z.string().default("Fixam <noreply@fixam.ng>"),
+  EMAIL_FROM: z.string().default("Fixam <noreply@fix-am.ng>"),
   EMAIL_REPLY_TO: z.string().optional(),
   ADMIN_NOTIFY_EMAIL: z.string().optional(),
 

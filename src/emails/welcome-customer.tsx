@@ -43,5 +43,5 @@ export default function WelcomeCustomer({
 
 WelcomeCustomer.PreviewProps = {
   name: "Chidi",
-  browseUrl: "https://fixam.ng/artisans",
+  browseUrl: "https://fix-am.ng/artisans",
 } satisfies WelcomeCustomerProps;

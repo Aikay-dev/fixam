@@ -1,4 +1,5 @@
 import ArtisanProfileSubmitted from "@/emails/artisan-profile-submitted";
+import LeadNumberViewed from "@/emails/lead-number-viewed";
 import PasswordReset from "@/emails/password-reset";
 import VerifyEmailOtp from "@/emails/verify-email-otp";
 import WelcomeArtisan from "@/emails/welcome-artisan";
@@ -59,6 +60,36 @@ export function sendWelcomeCustomerEmail(user: Recipient) {
       name: user.name,
       browseUrl: url(ROUTES.directory),
     }),
+  });
+}
+
+/**
+ * ⭐ Lead alert. Queued, never awaited — the customer must get the phone
+ * number immediately regardless of how slow the mail provider is.
+ */
+export function sendLeadAlertEmail(
+  user: Recipient & {
+    customerFirstName: string;
+    categoryName: string;
+    areaName?: string;
+  },
+) {
+  queueEmail({
+    userId: user.userId,
+    to: user.email,
+    subject: `${user.customerFirstName} just took your number on Fixam`,
+    type: "lead-number-viewed",
+    react: LeadNumberViewed({
+      artisanName: user.name ?? "there",
+      customerFirstName: user.customerFirstName,
+      categoryName: user.categoryName,
+      areaName: user.areaName,
+      leadsUrl: url(ROUTES.proLeads),
+    }),
+    payload: {
+      categoryName: user.categoryName,
+      areaName: user.areaName,
+    },
   });
 }
 

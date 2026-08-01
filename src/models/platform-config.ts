@@ -1,6 +1,6 @@
 import { Schema, model, models, type InferSchemaType, type Model } from "mongoose";
 
-import { RATE_LIMITS } from "@/lib/constants";
+import { RATE_LIMITS, SITE } from "@/lib/constants";
 
 /**
  * Single-document settings collection, editable from /admin/settings.
@@ -29,7 +29,7 @@ const platformConfigSchema = new Schema(
     /** Slugs of states currently promoted on the marketing surface. */
     launchStates: { type: [String], default: ["lagos"] },
 
-    supportEmail: { type: String, default: "support@fixam.ng" },
+    supportEmail: { type: String, default: SITE.supportEmail },
     supportWhatsapp: { type: String, default: "" },
   },
   { timestamps: true },
