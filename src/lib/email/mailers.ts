@@ -1,3 +1,5 @@
+import ArtisanProfileApproved from "@/emails/artisan-profile-approved";
+import ArtisanProfileRejected from "@/emails/artisan-profile-rejected";
 import ArtisanProfileSubmitted from "@/emails/artisan-profile-submitted";
 import LeadNumberViewed from "@/emails/lead-number-viewed";
 import PasswordReset from "@/emails/password-reset";
@@ -90,6 +92,39 @@ export function sendLeadAlertEmail(
       categoryName: user.categoryName,
       areaName: user.areaName,
     },
+  });
+}
+
+export function sendProfileApprovedEmail(
+  user: Recipient & { slug: string },
+) {
+  queueEmail({
+    userId: user.userId,
+    to: user.email,
+    subject: "You're live on Fixam 🎉",
+    type: "artisan-profile-approved",
+    react: ArtisanProfileApproved({
+      name: user.name,
+      profileUrl: url(ROUTES.artisan(user.slug)),
+      dashboardUrl: url(ROUTES.pro),
+    }),
+  });
+}
+
+export function sendProfileRejectedEmail(
+  user: Recipient & { reason: string },
+) {
+  queueEmail({
+    userId: user.userId,
+    to: user.email,
+    subject: "Your Fixam profile needs one change",
+    type: "artisan-profile-rejected",
+    react: ArtisanProfileRejected({
+      name: user.name,
+      reason: user.reason,
+      editUrl: url(ROUTES.proProfile),
+    }),
+    payload: { reason: user.reason },
   });
 }
 
