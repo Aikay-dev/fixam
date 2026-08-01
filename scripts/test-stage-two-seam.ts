@@ -26,10 +26,25 @@ loadEnv({ path: ".env" });
 
 const SRC = join(process.cwd(), "src");
 
-/** Files permitted to mention the flag. */
+/**
+ * Files permitted to touch the flag.
+ *
+ * The rule this test enforces is narrow and specific: **no code may branch on
+ * `monetizationEnabled` to decide whether or what to charge, except
+ * canRevealContact()**. Reading it to *show* it to a human is not a pricing
+ * decision and is fine.
+ *
+ * Only add to this list if the file genuinely cannot change what a customer
+ * or artisan is charged. If in doubt, it doesn't belong here.
+ */
 const ALLOWED = [
-  join("src", "lib", "artisan", "reveal-policy.ts"), // the seam itself
-  join("src", "models", "platform-config.ts"), // where it is defined
+  // The seam itself — the one and only pricing decision.
+  join("src", "lib", "artisan", "reveal-policy.ts"),
+  // Where the field is defined.
+  join("src", "models", "platform-config.ts"),
+  // Renders the flag read-only in the admin panel. Displays it, never acts
+  // on it — the toggle is deliberately not even clickable.
+  join("src", "app", "(dashboard)", "admin", "settings", "page.tsx"),
 ];
 
 function walk(dir: string): string[] {
