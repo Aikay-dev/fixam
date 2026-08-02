@@ -154,6 +154,38 @@ export async function nearbyLgasWithArtisans(
   return rows as { name: string; slug: string; count: number }[];
 }
 
+/**
+ * Trades that currently have at least one approved artisan.
+ *
+ * Used to point visitors from an empty trade page at ones where somebody is
+ * actually available, and by the footer so it stops advertising dead ends.
+ */
+export async function tradesWithArtisans(
+  limit = 12,
+): Promise<{ name: string; slug: string; count: number }[]> {
+  await connectDB();
+
+  const rows = await ArtisanProfile.aggregate([
+    { $match: { status: PUBLIC_ARTISAN_STATUS } },
+    { $unwind: "$trades" },
+    { $group: { _id: "$trades.categoryId", count: { $sum: 1 } } },
+    { $sort: { count: -1 } },
+    { $limit: limit },
+    {
+      $lookup: {
+        from: "categories",
+        localField: "_id",
+        foreignField: "_id",
+        as: "category",
+      },
+    },
+    { $unwind: "$category" },
+    { $project: { name: "$category.name", slug: "$category.slug", count: 1 } },
+  ]).exec();
+
+  return rows as { name: string; slug: string; count: number }[];
+}
+
 /** States that have artisans for this trade, for the national page. */
 export async function statesWithArtisans(
   categoryId: string,

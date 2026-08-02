@@ -194,8 +194,7 @@ export function ContactGate({
             <p className="font-semibold">Verify your email first</p>
           </div>
           <p className="text-muted-foreground text-sm">
-            Confirm your email address and you&apos;ll be able to see
-            {" "}{firstName}&apos;s number right away.
+            {`Confirm your email address and you'll be able to see ${firstName}'s number right away.`}
           </p>
           <Button asChild className="w-full">
             <Link
@@ -247,8 +246,11 @@ export function ContactGate({
           )}
         </Button>
 
+        {/* Built as one string rather than interpolated mid-sentence — JSX
+            whitespace around an expression is easy to lose to a reformat, and
+            it renders as "Emekawill" when it goes. */}
         <p className="text-muted-foreground text-center text-xs">
-          Free. {firstName} will be told you&apos;re interested.
+          {`Free. ${firstName} will be told you're interested.`}
         </p>
       </CardContent>
     </Card>

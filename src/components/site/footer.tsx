@@ -12,12 +12,49 @@ import { Category } from "@/models/category";
 async function getPopularCategories() {
   try {
     await connectDB();
-    return await Category.find({ isActive: true, parentId: { $ne: null } })
+
+    // Trades that actually have someone come first. Sorting purely
+    // alphabetically would fill the footer with empty categories, which is
+    // both a poor first impression and a lot of internal links to pages
+    // carrying noindex.
+    const populated = await Category.find({
+      isActive: true,
+      parentId: { $ne: null },
+      artisanCount: { $gt: 0 },
+    })
       .select("name slug artisanCount")
       .sort({ artisanCount: -1, name: 1 })
-      .limit(12)
+      .limit(8)
       .lean()
       .exec();
+
+    if (populated.length >= 8) return populated;
+
+    // Early on there won't be eight. Top up with the most commonly searched
+    // trades so the footer still looks like a directory rather than a stub.
+    const fillers = await Category.find({
+      isActive: true,
+      parentId: { $ne: null },
+      slug: {
+        $in: [
+          "plumber",
+          "electrician",
+          "carpenter",
+          "ac-installation-repair",
+          "painter",
+          "tiler",
+          "pop-ceiling",
+          "generator-repair",
+        ],
+      },
+      _id: { $nin: populated.map((c) => c._id) },
+    })
+      .select("name slug artisanCount")
+      .limit(8 - populated.length)
+      .lean()
+      .exec();
+
+    return [...populated, ...fillers];
   } catch {
     // The footer must never take the page down.
     return [];

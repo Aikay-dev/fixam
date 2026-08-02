@@ -74,7 +74,8 @@ async function main() {
   }
 
   const [categories, states, lgas] = await Promise.all([
-    Category.find().select("slug").lean().exec(),
+    // parentId is needed to tell a trade from a group heading.
+    Category.find().select("slug parentId").lean().exec(),
     State.find().select("slug").lean().exec(),
     Lga.find().select("slug").lean().exec(),
   ]);
@@ -99,29 +100,49 @@ async function main() {
   }
 
   // ---------------------------------------------------------------
-  console.log("\n2. Thin-content guard — these must 404\n");
+  console.log("\n2. Empty TRADE pages render, but are noindex\n");
 
-  // A real trade and a real place, but no artisan there.
-  const emptyCombos: string[] = [];
-
+  // ~82 of these, linked from the footer and home page. 404ing them makes
+  // the site look broken; noindex keeps them out of search until they have
+  // content.
   const usedCategoryIds = new Set(combos.map((r) => String(r._id.category)));
-  const emptyCategory = categories.find(
-    (c) => c.slug && !usedCategoryIds.has(String(c._id)),
-  );
-  if (emptyCategory) emptyCombos.push(`/services/${emptyCategory.slug}`);
+  const emptyCategories = categories
+    .filter((c) => c.slug && c.parentId && !usedCategoryIds.has(String(c._id)))
+    .slice(0, 3);
 
+  for (const category of emptyCategories) {
+    const path = `/services/${category.slug}`;
+    const response = await fetch(`${BASE}${path}`, { redirect: "manual" });
+    const html = await response.text();
+
+    check(`200  ${path}`, response.status === 200, `got ${response.status}`);
+    check(
+      `     noindex on ${category.slug}`,
+      /<meta name="robots"[^>]*noindex/i.test(html),
+      "empty trade page would be indexed",
+    );
+    check(
+      `     recruits an artisan`,
+      html.includes("List your services free"),
+    );
+  }
+
+  // ---------------------------------------------------------------
+  console.log("\n3. Empty LOCATION pages must still 404\n");
+
+  // ~60,000 of these. Rendering them all would be a doorway-page pattern.
   const usedStateIds = new Set(
     combos.map((r) => (r._id.state ? String(r._id.state) : "")),
   );
   const emptyState = states.find((s) => !usedStateIds.has(String(s._id)));
   const anyCategory = catSlug.get(String(combos[0]?._id.category)) ?? "plumber";
-  if (emptyState) emptyCombos.push(`/services/${anyCategory}/${emptyState.slug}`);
 
-  for (const path of emptyCombos) {
-    check(`404  ${path}`, (await status(path)) === 404, "empty page is indexable");
+  if (emptyState) {
+    const path = `/services/${anyCategory}/${emptyState.slug}`;
+    check(`404  ${path}`, (await status(path)) === 404, "empty location page renders");
   }
 
-  // Nonsense slugs.
+  // Nonsense slugs — these never exist at any level.
   for (const path of [
     "/services/not-a-real-trade",
     "/services/plumber/not-a-state",
@@ -131,7 +152,32 @@ async function main() {
   }
 
   // ---------------------------------------------------------------
-  console.log("\n3. Sitemap\n");
+  console.log("\n3b. Internal links must not point at 404s\n");
+
+  const homeHtml = await (await fetch(`${BASE}/`)).text();
+  const linkedServicePaths = [
+    ...new Set(
+      [...homeHtml.matchAll(/href="(\/services\/[a-z0-9/-]+)"/g)].map(
+        (m) => m[1]!,
+      ),
+    ),
+  ];
+
+  let brokenLinks = 0;
+  for (const path of linkedServicePaths) {
+    if ((await status(path)) === 404) {
+      brokenLinks += 1;
+      console.log(`      broken: ${path}`);
+    }
+  }
+  check(
+    `every /services link on the home page resolves`,
+    brokenLinks === 0,
+    `${brokenLinks} of ${linkedServicePaths.length} are 404`,
+  );
+
+  // ---------------------------------------------------------------
+  console.log("\n4. Sitemap\n");
 
   const sitemapResponse = await fetch(`${BASE}/sitemap.xml`);
   const sitemapXml = await sitemapResponse.text();
@@ -161,6 +207,17 @@ async function main() {
     !paths.some((p) => /^\/(admin|pro|account|login|signup|api)/.test(p)),
   );
 
+  // A noindex page in a sitemap is a contradictory signal — it asks Google to
+  // crawl something it is simultaneously told not to index.
+  const emptyInSitemap = emptyCategories.filter((c) =>
+    paths.includes(`/services/${c.slug}`),
+  );
+  check(
+    "excludes noindex (empty) trade pages",
+    emptyInSitemap.length === 0,
+    emptyInSitemap.map((c) => c.slug).join(", "),
+  );
+
   // The expensive but important one.
   let dead = 0;
   for (const path of paths) {
@@ -176,7 +233,7 @@ async function main() {
   );
 
   // ---------------------------------------------------------------
-  console.log("\n4. robots.txt\n");
+  console.log("\n5. robots.txt\n");
 
   const robotsResponse = await fetch(`${BASE}/robots.txt`);
   const robotsTxt = await robotsResponse.text();

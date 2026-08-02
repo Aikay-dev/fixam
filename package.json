@@ -17,6 +17,7 @@
     "test:journey": "tsx --conditions=react-server scripts/test-journey.ts",
     "test:admin-allowlist": "tsx --conditions=react-server scripts/test-admin-allowlist.ts",
     "dev:approve": "tsx scripts/dev-approve.ts",
+    "dev:seed-images": "tsx scripts/dev-seed-images.ts",
     "make-admin": "tsx scripts/make-admin.ts",
     "email": "email dev --dir src/emails"
   },
