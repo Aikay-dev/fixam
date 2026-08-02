@@ -14,6 +14,7 @@
     "test:scrape": "tsx scripts/test-scrape.ts",
     "test:stage-two": "tsx --conditions=react-server scripts/test-stage-two-seam.ts",
     "test:journey": "tsx --conditions=react-server scripts/test-journey.ts",
+    "test:admin-allowlist": "tsx --conditions=react-server scripts/test-admin-allowlist.ts",
     "dev:approve": "tsx scripts/dev-approve.ts",
     "make-admin": "tsx scripts/make-admin.ts",
     "email": "email dev --dir src/emails"

@@ -24,6 +24,24 @@ async function main() {
     process.exit(1);
   }
 
+  const { allowedAdminEmails, isAllowedAdminEmail } = await import(
+    "../src/lib/auth/admin-allowlist"
+  );
+
+  // Refuse here as well as at request time. Granting a role that would then
+  // be denied on every use is just a confusing dead end.
+  if (!revoke && !isAllowedAdminEmail(email)) {
+    console.error(`\n✗ ${email} is not on the admin allow-list.\n`);
+    console.error("Currently allowed:");
+    for (const allowed of allowedAdminEmails()) console.error(`  • ${allowed}`);
+    console.error(
+      "\nTo allow this address, add it to ADMIN_EMAILS in\n" +
+        "  src/lib/auth/admin-allowlist.ts\n" +
+        "then commit the change and re-run this command.",
+    );
+    process.exit(1);
+  }
+
   const { connectDB, disconnectDB } = await import("../src/lib/db");
   const { User } = await import("../src/models");
 
@@ -50,6 +68,14 @@ async function main() {
   console.log(
     "\nNote: sign out and back in — roles are read into the session token at sign-in.",
   );
+
+  if (!revoke) {
+    console.log(
+      "\nAccess needs BOTH the admin role and the allow-list entry.\n" +
+        "Removing the address from src/lib/auth/admin-allowlist.ts revokes\n" +
+        "access immediately, without touching the database.",
+    );
+  }
 
   await disconnectDB();
 }

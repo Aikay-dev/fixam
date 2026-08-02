@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
-import { Lock } from "lucide-react";
+import { Lock, ShieldCheck } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { allowedAdminEmails } from "@/lib/auth/admin-allowlist";
 import { requireAdmin } from "@/lib/auth/session";
 import { getPlatformConfig } from "@/models/platform-config";
 
@@ -34,8 +35,11 @@ function Row({
 }
 
 export default async function AdminSettingsPage() {
-  await requireAdmin("/admin/settings");
+  const user = await requireAdmin("/admin/settings");
   const config = await getPlatformConfig();
+
+  const admins = allowedAdminEmails();
+  const currentAdminEmail = user.email?.toLowerCase();
 
   return (
     <div className="mx-auto grid max-w-3xl gap-6">
@@ -77,6 +81,45 @@ export default async function AdminSettingsPage() {
             not a toggle anyone can hit by accident. The switch itself lives in
             one function — <code>canRevealContact()</code> — and{" "}
             <code>npm run test:stage-two</code> proves nothing else reads it.
+          </p>
+        </CardContent>
+      </Card>
+
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2 text-base">
+            <ShieldCheck className="size-4" />
+            Admin access
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="grid gap-3">
+          <p className="text-muted-foreground text-sm">
+            Only these addresses may hold admin access. A user needs{" "}
+            <strong>both</strong> an entry here and the admin role on their
+            account — losing either one removes access immediately.
+          </p>
+
+          <ul className="grid gap-1.5">
+            {admins.map((email) => (
+              <li
+                key={email}
+                className="bg-muted/50 flex items-center justify-between gap-2 rounded-md px-3 py-2 text-sm"
+              >
+                <span className="truncate font-mono text-xs">{email}</span>
+                {email === currentAdminEmail ? (
+                  <Badge variant="secondary">you</Badge>
+                ) : null}
+              </li>
+            ))}
+          </ul>
+
+          <p className="text-muted-foreground bg-muted/50 rounded-md p-3 text-xs">
+            Edit the list in{" "}
+            <code>src/lib/auth/admin-allowlist.ts</code>, then commit and
+            deploy. It lives in code on purpose: adding an admin should be a
+            reviewable change, not a silent database write. If the database
+            were the only authority, anyone who obtained write access to it
+            could grant themselves admin.
           </p>
         </CardContent>
       </Card>

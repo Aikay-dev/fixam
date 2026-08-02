@@ -2,6 +2,7 @@ import { redirect } from "next/navigation";
 import type { Session } from "next-auth";
 
 import { auth } from "@/auth";
+import { isAllowedAdminEmail } from "@/lib/auth/admin-allowlist";
 import { ROUTES, type Role } from "@/lib/constants";
 
 /**
@@ -51,11 +52,23 @@ export async function requireRole(
   nextPath?: string,
 ): Promise<SessionUser> {
   const user = await requireUser(nextPath);
+
   if (!user.roles?.includes(role)) {
     // 404 rather than 403: admin routes should not confirm they exist to a
     // signed-in customer poking at URLs.
     redirect("/404");
   }
+
+  // Admin needs the email allow-list as well as the role. See
+  // src/lib/auth/admin-allowlist.ts for why the code, not the database, is
+  // the final authority here.
+  if (role === "admin" && !isAllowedAdminEmail(user.email)) {
+    console.warn(
+      `[security] ${user.email} holds the admin role but is not on the allow-list — denied.`,
+    );
+    redirect("/404");
+  }
+
   return user;
 }
 
@@ -96,6 +109,14 @@ export async function authenticateRequest(options?: {
   }
 
   if (options?.role && !user.roles?.includes(options.role)) {
+    return { ok: false, status: 403, reason: "forbidden" };
+  }
+
+  // Same second gate for API routes: the role alone is not enough for admin.
+  if (options?.role === "admin" && !isAllowedAdminEmail(user.email)) {
+    console.warn(
+      `[security] ${user.email} holds the admin role but is not on the allow-list — denied.`,
+    );
     return { ok: false, status: 403, reason: "forbidden" };
   }
 
