@@ -16,7 +16,7 @@ import { getPlatformConfig } from "@/models/platform-config";
  * Submit a profile for admin review.
  *
  * Nothing becomes publicly visible or indexable here — approval is a human
- * step in /admin/artisans. That gate is what keeps fake listings out of the
+ * step in /admin/professionals. That gate is what keeps fake listings out of the
  * directory and out of Google, which is the whole "vetted" promise.
  */
 export async function POST() {

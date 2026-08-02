@@ -78,12 +78,12 @@ export function SignupForm({
     <div className="grid gap-6">
       <div className="grid gap-2 text-center">
         <h1 className="text-2xl font-bold tracking-tight">
-          {isArtisan ? "Join Fixam as an artisan" : "Create your account"}
+          {isArtisan ? "Join Fixam as a professional" : "Create your account"}
         </h1>
         <p className="text-muted-foreground text-sm text-balance">
           {isArtisan
             ? "Free to list. Free to get customers. No commission, ever."
-            : "You need an account to see an artisan's phone number. It's free."}
+            : "You need an account to see a professional's phone number. It's free."}
         </p>
       </div>
 
@@ -197,9 +197,9 @@ export function SignupForm({
           </>
         ) : (
           <>
-            Are you an artisan?{" "}
-            {/* Straight to artisan signup — the reader is demonstrably signed
-                out, so routing via /become-an-artisan would only bounce them
+            Are you a professional?{" "}
+            {/* Straight to professional signup — the reader is demonstrably signed
+                out, so routing via /become-an-professional would only bounce them
                 back here. */}
             <Link href="/signup?role=artisan" className="underline">
               List your services free

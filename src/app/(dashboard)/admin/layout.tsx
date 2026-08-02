@@ -43,8 +43,8 @@ export default async function AdminLayout({
   const nav: NavItem[] = [
     { href: "/admin", label: "Overview", icon: <LayoutDashboard className="size-4" /> },
     {
-      href: "/admin/artisans",
-      label: "Artisans",
+      href: "/admin/professionals",
+      label: "Professionals",
       icon: <ClipboardCheck className="size-4" />,
       badge: counts.pending,
     },

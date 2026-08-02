@@ -24,7 +24,7 @@ import { ROUTES } from "@/lib/constants";
  * payload. It only ever arrives as the response body of an authenticated POST
  * to /api/artisans/[slug]/reveal, which is also what writes the Lead record.
  *
- * Everything else about an artisan is deliberately wide open. This is the
+ * Everything else about a professional is deliberately wide open. This is the
  * only thing behind a wall, and the wall is the business model.
  */
 
@@ -176,7 +176,7 @@ export function ContactGate({
             </li>
             <li className="flex items-start gap-1.5">
               <ShieldCheck className="mt-0.5 size-3.5 shrink-0" />
-              Signing up is what keeps artisans safe from spam callers
+              Signing up is what keeps professionals safe from spam callers
             </li>
           </ul>
         </CardContent>

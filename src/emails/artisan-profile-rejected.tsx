@@ -14,10 +14,10 @@ export type ArtisanProfileRejectedProps = {
 };
 
 /**
- * A rejection has to leave the artisan able to act.
+ * A rejection has to leave the professional able to act.
  *
  * The specific reason and a direct link back to the editor are the whole
- * point — "rejected" with no explanation just loses the artisan.
+ * point — "rejected" with no explanation just loses the professional.
  */
 export default function ArtisanProfileRejected({
   name,
@@ -52,7 +52,7 @@ export default function ArtisanProfileRejected({
 
       <Text style={text.small}>
         This isn&apos;t a rejection of you or your work. We check every profile
-        so customers can trust the artisans they find here — and that same
+        so customers can trust the professionals they find here — and that same
         check is what makes your listing worth having.
       </Text>
     </EmailLayout>

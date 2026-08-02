@@ -17,7 +17,7 @@ import { ROUTES, SITE } from "@/lib/constants";
 export const metadata: Metadata = {
   title: "How Fixam works",
   description:
-    "Browse vetted artisans, check real reviews, and contact them directly on WhatsApp. Free for customers, free for artisans.",
+    "Browse vetted professionals, check real reviews, and contact them directly on WhatsApp. Free for customers, free for professionals.",
   alternates: { canonical: "/how-it-works" },
 };
 
@@ -86,7 +86,7 @@ export default function HowItWorksPage() {
 
         <Step number={3} icon={<Lock className="size-5" />} title="Create a free account to see their number">
           This is the only thing we ask for. It takes a minute, it&apos;s
-          free, and it&apos;s what keeps artisans from being buried in spam
+          free, and it&apos;s what keeps professionals from being buried in spam
           calls — so the ones you contact actually pick up.
         </Step>
 
@@ -110,7 +110,7 @@ export default function HowItWorksPage() {
             </h3>
             <p className="text-muted-foreground mt-1.5 text-sm">
               Tell the next person what happened. Only customers who actually
-              took an artisan&apos;s number can review them, so what you read
+              took a professional&apos;s number can review them, so what you read
               here comes from real jobs — not from strangers or competitors.
             </p>
           </div>
@@ -118,15 +118,15 @@ export default function HowItWorksPage() {
 
         <div className="mt-8">
           <Button asChild size="lg">
-            <Link href={ROUTES.directory}>Find an artisan</Link>
+            <Link href={ROUTES.directory}>Find a professional</Link>
           </Button>
         </div>
       </section>
 
-      {/* Artisans */}
+      {/* Professionals */}
       <section className="mt-16 border-t pt-12">
         <h2 className="mb-2 text-xl font-bold tracking-tight">
-          If you&apos;re an artisan
+          If you&apos;re a professional
         </h2>
         <p className="text-muted-foreground mb-6 text-sm">
           You do the work. We help people find you.
@@ -169,7 +169,7 @@ export default function HowItWorksPage() {
           <CardContent className="pt-6">
             <h3 className="font-semibold">You can list more than one trade</h3>
             <p className="text-muted-foreground mt-1 text-sm">
-              Most artisans do more than one thing. If you do plumbing and
+              Most professionals do more than one thing. If you do plumbing and
               carpentry, list both — you&apos;ll show up in searches for each
               one. You can add up to eight trades, and the first one you pick
               becomes your main trade.
@@ -179,7 +179,7 @@ export default function HowItWorksPage() {
 
         <div className="mt-8">
           <Button asChild size="lg">
-            <Link href={ROUTES.joinAsArtisan}>List your services free</Link>
+            <Link href={ROUTES.listYourServices}>List your services free</Link>
           </Button>
         </div>
       </section>
@@ -192,7 +192,7 @@ export default function HowItWorksPage() {
         <ul className="text-muted-foreground mt-4 grid gap-3 text-sm">
           <li>
             <strong className="text-foreground">We don&apos;t hold your money.</strong>{" "}
-            You pay the artisan directly, on your own terms. We&apos;re not in
+            You pay the professional directly, on your own terms. We&apos;re not in
             the middle of that.
           </li>
           <li>
@@ -202,7 +202,7 @@ export default function HowItWorksPage() {
           </li>
           <li>
             <strong className="text-foreground">We don&apos;t guarantee the work.</strong>{" "}
-            We check that artisans are real and reachable, and we show you
+            We check that professionals are real and reachable, and we show you
             what previous customers said. The judgement is still yours.
           </li>
         </ul>

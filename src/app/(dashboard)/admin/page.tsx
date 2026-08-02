@@ -140,14 +140,14 @@ export default async function AdminOverviewPage() {
             <ClipboardCheck className="size-5 shrink-0 text-blue-600" />
             <p className="min-w-0 flex-1 text-sm">
               <strong>
-                {stats.pendingArtisans} artisan
+                {stats.pendingArtisans} professional
                 {stats.pendingArtisans === 1 ? "" : "s"}
               </strong>{" "}
               waiting for review. They stay invisible to customers until
               approved.
             </p>
             <Button asChild size="sm">
-              <Link href="/admin/artisans?status=pending_review">
+              <Link href="/admin/professionals?status=pending_review">
                 Review now
               </Link>
             </Button>
@@ -169,10 +169,10 @@ export default async function AdminOverviewPage() {
         />
         <Stat
           icon={<ClipboardCheck className="size-4" />}
-          label="Live artisans"
+          label="Live professionals"
           value={stats.approvedArtisans}
           hint={`${stats.pendingArtisans} awaiting review`}
-          href="/admin/artisans?status=approved"
+          href="/admin/professionals?status=approved"
         />
         <Stat
           icon={<Users className="size-4" />}

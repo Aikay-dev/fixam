@@ -78,8 +78,8 @@ export async function SiteFooter() {
           <div>
             <Logo showTagline />
             <p className="text-muted-foreground mt-3 text-sm">
-              Nigeria&apos;s trusted artisan marketplace. Free for customers,
-              free for artisans.
+              Nigeria&apos;s marketplace for trusted artisans and professionals.
+              Free for customers, free to list.
             </p>
           </div>
 
@@ -88,7 +88,7 @@ export async function SiteFooter() {
             <ul className="text-muted-foreground mt-3 grid gap-2 text-sm">
               <li>
                 <Link href={ROUTES.directory} className="hover:text-foreground">
-                  Find an artisan
+                  Find a professional
                 </Link>
               </li>
               <li>
@@ -105,10 +105,10 @@ export async function SiteFooter() {
           </div>
 
           <div>
-            <h3 className="text-sm font-semibold">For artisans</h3>
+            <h3 className="text-sm font-semibold">For professionals</h3>
             <ul className="text-muted-foreground mt-3 grid gap-2 text-sm">
               <li>
-                <Link href={ROUTES.joinAsArtisan} className="hover:text-foreground">
+                <Link href={ROUTES.listYourServices} className="hover:text-foreground">
                   List your services free
                 </Link>
               </li>
@@ -119,7 +119,7 @@ export async function SiteFooter() {
               </li>
               <li>
                 <Link href={ROUTES.login} className="hover:text-foreground">
-                  Artisan sign in
+                  Professional sign in
                 </Link>
               </li>
             </ul>

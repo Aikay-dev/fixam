@@ -15,7 +15,7 @@ export const metadata: Metadata = {
 /**
  * Stage One billing page: there is nothing to bill.
  *
- * It exists anyway so Stage Two has a home, and so the artisan can see the
+ * It exists anyway so Stage Two has a home, and so the professional can see the
  * running total of what they've received for free — which is exactly the
  * argument that makes pay-per-lead credits an easy sell later.
  */
@@ -45,7 +45,7 @@ export default async function ProBillingPage() {
           </div>
           <p className="text-muted-foreground text-sm">
             No joining fee, no monthly charge, no commission, and nothing when
-            a customer contacts you. That applies to every artisan on the
+            a customer contacts you. That applies to every professional on the
             platform right now.
           </p>
         </CardContent>

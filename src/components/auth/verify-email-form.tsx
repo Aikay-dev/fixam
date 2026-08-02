@@ -55,7 +55,7 @@ export function VerifyEmailForm({
 
       toast.success("Email verified.");
 
-      // Artisans go straight to profile setup — the profile is the whole
+      // Professionals go straight to profile setup — the profile is the whole
       // reason they signed up, and an empty one earns them nothing.
       const destination =
         next ?? (body.isArtisan ? ROUTES.proProfile : ROUTES.login);

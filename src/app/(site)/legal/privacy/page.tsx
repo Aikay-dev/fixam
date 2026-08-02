@@ -27,13 +27,13 @@ export default function PrivacyPage() {
             Google, your Google account&apos;s name, email and profile photo).
           </p>
           <p className="mt-2">
-            <strong className="text-foreground">Artisans:</strong> in addition,
+            <strong className="text-foreground">Professionals:</strong> in addition,
             your phone and WhatsApp number, trades, service areas, photos of
             your work, and any credentials you upload.
           </p>
           <p className="mt-2">
             <strong className="text-foreground">When you unlock a number:</strong>{" "}
-            we record which artisan, when, and which trade you were browsing.
+            we record which professional, when, and which trade you were browsing.
             We also store a one-way hashed fingerprint of your IP address and
             browser — hashed, so we can spot abuse patterns without keeping a
             log of where you personally browse from.
@@ -45,10 +45,10 @@ export default function PrivacyPage() {
             What we do with it
           </h2>
           <ul className="mt-2 grid list-disc gap-1.5 pl-5">
-            <li>Showing artisan profiles to people looking to hire</li>
+            <li>Showing professional profiles to people looking to hire</li>
             <li>Letting you sign in and verifying your email address</li>
             <li>
-              Telling an artisan that someone is interested — they see your
+              Telling a professional that someone is interested — they see your
               first name, the trade, and the general area, not your email
               address
             </li>
@@ -56,7 +56,7 @@ export default function PrivacyPage() {
             <li>Understanding which trades and areas are in demand</li>
           </ul>
           <p className="mt-2">
-            We do not sell your data, and we do not share artisan phone numbers
+            We do not sell your data, and we do not share professional phone numbers
             with anyone other than the signed-in customer who unlocked them.
           </p>
         </section>
@@ -66,14 +66,14 @@ export default function PrivacyPage() {
             What&apos;s public
           </h2>
           <p className="mt-2">
-            An approved artisan profile is public and appears in search
+            An approved professional profile is public and appears in search
             engines: display name, trades, bio, area, photos of work, ratings
             and reviews.{" "}
             <strong className="text-foreground">
               Phone numbers are never public
             </strong>{" "}
             — they are released only to a signed-in, email-verified customer
-            who chooses to contact that artisan.
+            who chooses to contact that professional.
           </p>
           <p className="mt-2">
             Reviews are public and show the reviewer&apos;s first name.
@@ -100,7 +100,7 @@ export default function PrivacyPage() {
             Account and profile data is kept while your account is open.
             Verification codes expire within minutes and are deleted
             automatically. Contact records are kept as a history of enquiries —
-            repeat contact with the same artisan inside{" "}
+            repeat contact with the same professional inside{" "}
             {LEAD_DEDUPE_WINDOW_DAYS} days counts as one record, not many.
           </p>
         </section>

@@ -23,6 +23,32 @@ const nextConfig: NextConfig = {
   // Mongoose pulls in optional native deps it never uses in our config.
   serverExternalPackages: ["mongoose", "@napi-rs/snappy"],
 
+  async redirects() {
+    // The directory moved from /artisans to /professionals when Fixam opened
+    // up to lawyers, architects and developers. Nothing is deployed yet, so
+    // there is no live traffic to rescue — these exist because the old paths
+    // are already in commit history, seeded demo data and anything anyone
+    // bookmarked while testing, and a 301 costs nothing.
+    return [
+      { source: "/artisans", destination: "/professionals", permanent: true },
+      {
+        source: "/artisans/:slug",
+        destination: "/professionals/:slug",
+        permanent: true,
+      },
+      {
+        source: "/become-an-artisan",
+        destination: "/list-your-services",
+        permanent: true,
+      },
+      {
+        source: "/admin/artisans",
+        destination: "/admin/professionals",
+        permanent: true,
+      },
+    ];
+  },
+
   async headers() {
     return [
       {

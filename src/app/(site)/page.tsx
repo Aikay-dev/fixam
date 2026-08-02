@@ -18,7 +18,9 @@ export const metadata: Metadata = {
   // `absolute` opts out of the root layout's "%s | Fixam" template, which
   // would otherwise render "Fixam — ... | Fixam" on the one page whose title
   // already leads with the brand.
-  title: { absolute: "Fixam — Nigeria's Trusted Artisan Marketplace" },
+  title: {
+    absolute: "Fixam — Find Trusted Artisans & Professionals in Nigeria",
+  },
   description: SITE.description,
   alternates: { canonical: "/" },
 };
@@ -30,6 +32,17 @@ export const metadata: Metadata = {
  * 4 + 8 = 12 cells to fill three rows of four cleanly; seven tiles left a
  * ragged hole in the last row.
  */
+/**
+ * The groups that aren't manual trades. They get their own row because the
+ * hero promises lawyers, architects and web designers, and a promise the page
+ * never makes good on is worse than not making it.
+ */
+const PROFESSIONAL_GROUP_SLUGS = [
+  "professional-services",
+  "legal-financial",
+  "digital-technology",
+];
+
 const FEATURED_TRADES = [
   { slug: "plumber", image: "trade-plumber" },
   { slug: "electrician", image: "hero" },
@@ -45,13 +58,17 @@ const FEATURED_TRADES = [
 export default async function HomePage() {
   await connectDB();
 
-  const [allTrades, counts, featured] = await Promise.all([
+  const [allTrades, counts, featured, professionalGroups] = await Promise.all([
     Category.find({ isActive: true, parentId: { $ne: null } })
-      .select("name slug")
+      .select("name slug parentId")
       .lean()
       .exec(),
     liveCategoryCounts(),
     searchArtisans({ sort: "recommended", limit: 6 }),
+    Category.find({ slug: { $in: PROFESSIONAL_GROUP_SLUGS }, parentId: null })
+      .select("_id")
+      .lean()
+      .exec(),
   ]);
 
   const bySlug = new Map(allTrades.map((c) => [c.slug, c]));
@@ -67,12 +84,24 @@ export default async function HomePage() {
     };
   }).filter((t): t is NonNullable<typeof t> => Boolean(t));
 
-  // Everything else, so the page still leads somewhere for the other 75 trades.
+  const professionalGroupIds = new Set(professionalGroups.map((g) => String(g._id)));
+  const isProfessional = (c: { parentId?: unknown }) =>
+    professionalGroupIds.has(String(c.parentId));
+
+  // Everything else, so the page still leads somewhere for the other trades.
+  // Professional services are excluded here and given their own row below —
+  // this list sorts by how many people are listed, and the professional
+  // categories start at zero, so they would never surface on merit.
   const otherTrades = allTrades
     .filter((c) => !FEATURED_TRADES.some((f) => f.slug === c.slug))
+    .filter((c) => !isProfessional(c))
     .map((c) => ({ ...c, count: counts.get(String(c._id)) ?? 0 }))
     .sort((a, b) => b.count - a.count || a.name.localeCompare(b.name))
     .slice(0, 10);
+
+  const professionalServices = allTrades
+    .filter(isProfessional)
+    .sort((a, b) => a.name.localeCompare(b.name));
 
   return (
     <main>
@@ -94,14 +123,14 @@ export default async function HomePage() {
 
         <div className="relative mx-auto flex min-h-[560px] max-w-6xl flex-col justify-end px-4 pb-12 sm:min-h-[640px] sm:px-6 sm:pb-16">
           <h1 className="text-display max-w-3xl text-white">
-            The artisan you need is
+            The professional you need is
             <br />
             already nearby.
           </h1>
 
           <p className="mt-5 max-w-xl text-lg text-white/85">
-            Plumbers, electricians, carpenters and more — with real reviews and
-            photos of work they&apos;ve actually finished.
+            Plumbers, electricians and carpenters. Lawyers, architects and web
+            designers. All with real reviews from people who hired them.
           </p>
 
           <div className="mt-8 max-w-2xl">
@@ -115,7 +144,7 @@ export default async function HomePage() {
             </li>
             <li className="flex items-center gap-1.5">
               <BadgeCheck className="size-4 shrink-0" />
-              Every artisan checked before listing
+              Every professional checked before listing
             </li>
             <li className="flex items-center gap-1.5">
               <MessageCircle className="size-4 shrink-0" />
@@ -133,7 +162,8 @@ export default async function HomePage() {
               What do you need done?
             </h2>
             <p className="text-muted-foreground mt-1">
-              Over 80 trades, from a leaking tap to a full rewire.
+              Close to 100 services, from a leaking tap to a company
+              registration.
             </p>
           </div>
           <Button asChild variant="outline">
@@ -156,6 +186,29 @@ export default async function HomePage() {
             ))}
           </div>
         ) : null}
+
+        {professionalServices.length > 0 ? (
+          <div className="mt-12 border-t pt-8">
+            <h3 className="text-lg font-bold">Not just trades</h3>
+            <p className="text-muted-foreground mt-1 max-w-xl text-sm">
+              Fixam covers the professionals you hire the same way you hire a
+              plumber — you find someone nearby, check who has used them, and
+              call.
+            </p>
+
+            <div className="mt-5 flex flex-wrap gap-2">
+              {professionalServices.map((service) => (
+                <Link
+                  key={service.slug}
+                  href={ROUTES.category(service.slug)}
+                  className="border-input hover:border-primary hover:bg-accent rounded-full border px-3.5 py-1.5 text-sm transition-colors"
+                >
+                  {service.name}
+                </Link>
+              ))}
+            </div>
+          </div>
+        ) : null}
       </section>
 
       {/* ── How it works ──────────────────────────────────────────────── */}
@@ -170,12 +223,12 @@ export default async function HomePage() {
               {
                 n: "1",
                 title: "Look through them",
-                body: "No forms, no waiting for a callback. Browse artisans near you, sort by rating, and see photos of jobs they've finished.",
+                body: "No forms, no waiting for a callback. Browse professionals near you, sort by rating, and see photos of jobs they've finished.",
               },
               {
                 n: "2",
                 title: "Read what customers said",
-                body: "Only someone who actually took an artisan's number can review them. What you're reading came from real jobs.",
+                body: "Only someone who actually took a professional's number can review them. What you're reading came from real jobs.",
               },
               {
                 n: "3",
@@ -197,13 +250,13 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* ── Featured artisans ─────────────────────────────────────────── */}
+      {/* ── Featured professionals ─────────────────────────────────────────── */}
       {featured.artisans.length > 0 ? (
         <section className="mx-auto max-w-6xl px-4 py-14 sm:px-6 sm:py-20">
           <div className="flex flex-wrap items-end justify-between gap-4">
             <div>
               <h2 className="text-2xl font-extrabold tracking-tight sm:text-3xl">
-                Artisans on Fixam
+                Professionals on Fixam
               </h2>
               <p className="text-muted-foreground mt-1 flex items-center gap-1.5">
                 <Star className="size-4 fill-amber-400 text-amber-400" />
@@ -216,14 +269,14 @@ export default async function HomePage() {
           </div>
 
           <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {featured.artisans.map((artisan) => (
-              <ArtisanCard key={artisan.id} artisan={artisan} />
+            {featured.artisans.map((professional) => (
+              <ArtisanCard key={professional.id} professional={professional} />
             ))}
           </div>
         </section>
       ) : null}
 
-      {/* ── Artisan recruitment ───────────────────────────────────────── */}
+      {/* ── Professional recruitment ───────────────────────────────────────── */}
       <section className="mx-auto max-w-6xl px-4 pb-16 sm:px-6 sm:pb-24">
         <div className="grid overflow-hidden rounded-xl border md:grid-cols-2">
           <div className="relative min-h-[260px] md:min-h-[340px]">
@@ -256,7 +309,7 @@ export default async function HomePage() {
               size="lg"
               className="bg-gold hover:bg-gold/90 text-navy-deep mt-2 w-fit font-semibold"
             >
-              <Link href={ROUTES.joinAsArtisan}>List your services free</Link>
+              <Link href={ROUTES.listYourServices}>List your services free</Link>
             </Button>
           </div>
         </div>

@@ -10,12 +10,12 @@ import { Button } from "@/components/ui/button";
 import { ROUTES } from "@/lib/constants";
 
 /**
- * Adds the artisan role, then sends the user straight into the profile
+ * Adds the professional role, then sends the user straight into the profile
  * editor.
  *
  * The `update()` call matters: roles live in the JWT, so without refreshing
  * it the user would be redirected to /pro and bounced straight back out for
- * not being an artisan — having just been told they are one.
+ * not being a professional — having just been told they are one.
  */
 export function BecomeArtisanButton() {
   const router = useRouter();
@@ -57,7 +57,7 @@ export function BecomeArtisanButton() {
       ) : (
         <>
           <Wrench className="size-4" />
-          Set up my artisan profile
+          Set up my professional profile
         </>
       )}
     </Button>

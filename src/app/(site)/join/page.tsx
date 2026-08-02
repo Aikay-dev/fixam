@@ -11,7 +11,7 @@ import { Category } from "@/models/category";
 export const metadata: Metadata = {
   title: "List your services free",
   description:
-    "Join Fixam as an artisan. No joining fee, no commission, no charge when a customer contacts you. List every trade you do.",
+    "Join Fixam as an artisan or professional. No joining fee, no commission, no charge when a customer contacts you. List every service you offer.",
   alternates: { canonical: "/join" },
 };
 
@@ -41,7 +41,7 @@ export default async function JoinPage() {
             size="lg"
             className="bg-gold hover:bg-gold/90 text-navy-deep mt-8"
           >
-            <Link href={ROUTES.joinAsArtisan}>Create my free profile</Link>
+            <Link href={ROUTES.listYourServices}>Create my free profile</Link>
           </Button>
         </div>
       </section>
@@ -59,7 +59,7 @@ export default async function JoinPage() {
             <ul className="mt-4 grid gap-2 text-sm">
               {[
                 "Your own profile page with photos of your work",
-                "Listed in searches for every trade you do",
+                "Listed in searches for every service you offer",
                 "Customers contact you directly on WhatsApp",
                 "Ratings and reviews from real customers",
                 "Email alert the moment someone takes your number",
@@ -78,9 +78,9 @@ export default async function JoinPage() {
           Do more than one thing? List them all.
         </h2>
         <p className="text-muted-foreground mt-2 text-sm">
-          Most artisans aren&apos;t just one trade. If you do plumbing and
-          tiling, or carpentry and POP, add both — you&apos;ll appear in
-          searches for each. Up to eight trades per profile.
+          Most people offer more than one thing. If you do plumbing and tiling,
+          or web design and IT support, add both — you&apos;ll appear in
+          searches for each. Up to eight services per profile.
         </p>
 
         <div className="mt-4 flex flex-wrap gap-2">
@@ -107,13 +107,13 @@ export default async function JoinPage() {
           </li>
           <li>
             <strong className="text-foreground">2. Fill in your profile.</strong>{" "}
-            Your trades, the areas you cover, your phone number, and photos of
-            work you&apos;ve finished. Each section saves on its own, so a bad
+            Your services, the areas you cover, your phone number, and photos
+            of work you&apos;ve finished. Each section saves on its own, so a bad
             connection won&apos;t lose your work.
           </li>
           <li>
             <strong className="text-foreground">3. Submit for review.</strong>{" "}
-            We check every artisan before they go live. That check is why
+            We check every professional before they go live. That check is why
             customers trust the people they find here.
           </li>
           <li>
@@ -133,7 +133,7 @@ export default async function JoinPage() {
 
         <div className="mt-8">
           <Button asChild size="lg">
-            <Link href={ROUTES.joinAsArtisan}>Create my free profile</Link>
+            <Link href={ROUTES.listYourServices}>Create my free profile</Link>
           </Button>
         </div>
       </section>

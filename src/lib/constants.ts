@@ -7,7 +7,7 @@ export const SITE = {
   name: "Fixam",
   tagline: "Get am done. Fix am fast.",
   description:
-    "Find trusted plumbers, electricians, carpenters and more near you in Nigeria. Browse real reviews, then connect directly on WhatsApp — free.",
+    "Find trusted plumbers, electricians, carpenters, lawyers, architects, web designers and more near you in Nigeria. Browse real reviews, then connect directly on WhatsApp — free.",
   locale: "en_NG",
   country: "NG",
   currency: "NGN",
@@ -138,10 +138,20 @@ export const PAGE_SIZE = {
 
 // --- Route groups ---------------------------------------------------------
 
+/**
+ * Public paths say "professional"; internal names (the ArtisanProfile model,
+ * the `artisan` role, the /api/artisans handlers) still say "artisan".
+ *
+ * That split is deliberate. Fixam lists lawyers, architects and web designers
+ * alongside plumbers, and none of the first three would call themselves an
+ * artisan — so nothing a visitor reads or shares should. The internal names
+ * are invisible, and renaming them would mean touching the reveal gate, the
+ * admin allowlist and every seed and test for no one's benefit.
+ */
 export const ROUTES = {
   home: "/",
-  directory: "/artisans",
-  artisan: (slug: string) => `/artisans/${slug}`,
+  directory: "/professionals",
+  professional: (slug: string) => `/professionals/${slug}`,
   category: (slug: string) => `/services/${slug}`,
   categoryInState: (category: string, state: string) =>
     `/services/${category}/${state}`,
@@ -155,7 +165,7 @@ export const ROUTES = {
    * the artisan role to an existing account, or just go to their profile —
    * linking to /signup was a dead end for anyone already signed in.
    */
-  joinAsArtisan: "/become-an-artisan",
+  listYourServices: "/list-your-services",
   verifyEmail: "/verify-email",
   account: "/account",
   accountContacts: "/account/contacts",

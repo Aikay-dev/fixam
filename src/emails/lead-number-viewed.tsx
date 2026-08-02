@@ -18,7 +18,7 @@ export type LeadNumberViewedProps = {
 /**
  * The most important email Fixam sends.
  *
- * It tells an artisan a real person chose them, and it quietly builds the
+ * It tells a professional a real person chose them, and it quietly builds the
  * case for Stage Two: every one of these is a lead they received for free.
  */
 export default function LeadNumberViewed({
@@ -47,7 +47,7 @@ export default function LeadNumberViewed({
           They may call or WhatsApp you shortly.
         </Text>
         <Text style={{ ...text.small, margin: "8px 0 0" }}>
-          Artisans who reply within the hour win far more jobs than those who
+          Professionals who reply within the hour win far more jobs than those who
           reply the next day. If you can&apos;t take it on, saying so quickly
           still helps your rating.
         </Text>
@@ -60,7 +60,7 @@ export default function LeadNumberViewed({
       </Section>
 
       <Text style={text.small}>
-        This lead cost you nothing. Fixam is free for artisans — no joining
+        This lead cost you nothing. Fixam is free for professionals — no joining
         fee, no commission, no charge per customer.
       </Text>
     </EmailLayout>

@@ -105,7 +105,17 @@ async function main() {
   // ~82 of these, linked from the footer and home page. 404ing them makes
   // the site look broken; noindex keeps them out of search until they have
   // content.
-  const usedCategoryIds = new Set(combos.map((r) => String(r._id.category)));
+  // Derived from its own unlimited query, NOT from `combos` — that one is
+  // capped at 25 for speed, so reusing it here silently mislabels any
+  // populated trade outside the window as empty and then demands a noindex
+  // the page is right not to have.
+  const usedCategoryIds = new Set(
+    (
+      await ArtisanProfile.distinct("trades.categoryId", {
+        status: PUBLIC_ARTISAN_STATUS,
+      })
+    ).map(String),
+  );
   const emptyCategories = categories
     .filter((c) => c.slug && c.parentId && !usedCategoryIds.has(String(c._id)))
     .slice(0, 3);
@@ -200,11 +210,15 @@ async function main() {
   });
 
   check("no duplicate URLs", new Set(paths).size === paths.length);
-  check("includes artisan profiles", paths.some((p) => p.startsWith("/artisans/")));
+  check("includes professional profiles", paths.some((p) => p.startsWith("/professionals/")));
   check("includes service pages", paths.some((p) => p.startsWith("/services/")));
   check(
     "excludes private areas",
-    !paths.some((p) => /^\/(admin|pro|account|login|signup|api)/.test(p)),
+    // The trailing (\/|$) is load-bearing: "/pro" is a prefix of
+    // "/professionals", so an unanchored match would flag every public
+    // profile in the sitemap as a leaked dashboard URL. src/proxy.ts draws
+    // the same boundary for the same reason.
+    !paths.some((p) => /^\/(admin|pro|account|login|signup|api)(\/|$)/.test(p)),
   );
 
   // A noindex page in a sitemap is a contradictory signal — it asks Google to

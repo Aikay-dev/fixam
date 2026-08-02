@@ -15,7 +15,7 @@ import { profileCompleteness } from "@/lib/validation/artisan";
 import { Lead } from "@/models/lead";
 
 export const metadata: Metadata = {
-  title: "Artisan dashboard",
+  title: "Professional dashboard",
   robots: { index: false, follow: false },
 };
 
@@ -179,11 +179,11 @@ export default async function ProOverviewPage() {
           <CardContent className="flex flex-wrap items-center gap-3 pt-6">
             <TrendingUp className="size-5 shrink-0 text-emerald-600" />
             <p className="min-w-0 flex-1 text-sm">
-              Fixam is free for artisans in this phase — no joining fee, no
+              Fixam is free for professionals in this phase — no joining fee, no
               commission, no charge when a customer contacts you.
             </p>
             <Button asChild variant="outline" size="sm">
-              <Link href={`/artisans/${profile.slug}`}>View public profile</Link>
+              <Link href={`/professionals/${profile.slug}`}>View public profile</Link>
             </Button>
           </CardContent>
         </Card>

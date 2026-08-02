@@ -31,7 +31,7 @@ export function HomeSearch() {
       <Input
         value={query}
         onChange={(e) => setQuery(e.target.value)}
-        placeholder="Plumber, AC repair, POP, generator…"
+        placeholder="Plumber, AC repair, POP, lawyer, web design…"
         aria-label="What do you need done?"
         // Solid white on the photograph rather than a translucent field:
         // glass over a busy image makes placeholder text unreadable, and

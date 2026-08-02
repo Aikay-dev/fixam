@@ -27,7 +27,7 @@ export async function SiteHeader() {
 
         <nav className="ml-4 hidden items-center gap-1 md:flex">
           <Button asChild variant="ghost" size="sm">
-            <Link href={ROUTES.directory}>Find an artisan</Link>
+            <Link href={ROUTES.directory}>Find a professional</Link>
           </Button>
           <Button asChild variant="ghost" size="sm">
             <Link href="/how-it-works">How it works</Link>
@@ -36,7 +36,7 @@ export async function SiteHeader() {
 
         <div className="ml-auto flex items-center gap-2">
           <Button asChild variant="ghost" size="icon" className="md:hidden">
-            <Link href={ROUTES.directory} aria-label="Find an artisan">
+            <Link href={ROUTES.directory} aria-label="Find a professional">
               <Search className="size-4" />
             </Link>
           </Button>
@@ -56,7 +56,7 @@ export async function SiteHeader() {
                   <DropdownMenuItem asChild>
                     <Link href={ROUTES.pro}>
                       <LayoutDashboard className="size-4" />
-                      Artisan dashboard
+                      Professional dashboard
                     </Link>
                   </DropdownMenuItem>
                 ) : null}
@@ -89,7 +89,7 @@ export async function SiteHeader() {
                 </Link>
               </Button>
               <Button asChild size="sm">
-                <Link href={ROUTES.joinAsArtisan}>
+                <Link href={ROUTES.listYourServices}>
                   <span className="sm:hidden">Join</span>
                   <span className="hidden sm:inline">List your services</span>
                 </Link>

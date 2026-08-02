@@ -21,7 +21,7 @@ export default async function AdminReviewsPage() {
       <div>
         <h1 className="text-2xl font-bold tracking-tight">Reviews</h1>
         <p className="text-muted-foreground text-sm">
-          Moderate what customers said about artisans.
+          Moderate what customers said about professionals.
         </p>
       </div>
 
@@ -32,7 +32,7 @@ export default async function AdminReviewsPage() {
           </p>
           <p className="text-muted-foreground mx-auto mt-1 max-w-md text-sm text-balance">
             Review posting lands in the next build phase. Only customers who
-            actually unlocked an artisan&apos;s number will be able to leave
+            actually unlocked a professional&apos;s number will be able to leave
             one — one review per contact, enforced by a unique index.
           </p>
         </CardContent>

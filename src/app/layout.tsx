@@ -29,7 +29,11 @@ const archivo = Archivo({
 export const metadata: Metadata = {
   metadataBase: new URL(clientEnv.NEXT_PUBLIC_SITE_URL),
   title: {
-    default: `${SITE.name} — Nigeria's Trusted Artisan Marketplace`,
+    // Keeps "artisan" in the title even though the interface says
+    // "professional" throughout: "artisan" is what Nigerians actually type
+    // into Google, and dropping it from metadata would cost the term the
+    // whole local-SEO strategy is built on.
+    default: `${SITE.name} — Find Trusted Artisans & Professionals in Nigeria`,
     template: `%s | ${SITE.name}`,
   },
   description: SITE.description,

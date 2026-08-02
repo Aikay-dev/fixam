@@ -38,7 +38,7 @@ export default async function AdminLocationsPage() {
       <div>
         <h1 className="text-2xl font-bold tracking-tight">Locations</h1>
         <p className="text-muted-foreground text-sm">
-          {states.length} states and {lgaCount} LGAs. Artisans can register
+          {states.length} states and {lgaCount} LGAs. Professionals can register
           anywhere; launch cities are what gets promoted.
         </p>
       </div>
@@ -50,7 +50,7 @@ export default async function AdminLocationsPage() {
               <TableRow>
                 <TableHead>State</TableHead>
                 <TableHead>Code</TableHead>
-                <TableHead>Live artisans</TableHead>
+                <TableHead>Live professionals</TableHead>
                 <TableHead>Launch city</TableHead>
               </TableRow>
             </TableHeader>

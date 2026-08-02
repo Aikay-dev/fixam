@@ -23,7 +23,7 @@ export const metadata: Metadata = {
  * nothing.
  *
  * Worse, there was no path at all for an existing customer to become an
- * artisan — they would have had to create a second account with a second
+ * professional — they would have had to create a second account with a second
  * email address, which is absurd for someone who signed up to hire a plumber
  * and happens to be an electrician.
  *
@@ -32,14 +32,14 @@ export const metadata: Metadata = {
 export default async function BecomeAnArtisanPage() {
   const user = await getSessionUser();
 
-  // 1. Signed out — normal artisan signup, landing in the profile editor.
+  // 1. Signed out — normal professional signup, landing in the profile editor.
   if (!user) {
     redirect(
       `${ROUTES.signup}?role=artisan&next=${encodeURIComponent(ROUTES.proProfile)}`,
     );
   }
 
-  // 2. Already an artisan — straight to their profile. Checks the database
+  // 2. Already a professional — straight to their profile. Checks the database
   //    when the token says otherwise, so a just-granted role isn't ignored
   //    and the user re-offered an upgrade they already took.
   if (await userHasRole(user, "artisan")) {
@@ -50,7 +50,7 @@ export default async function BecomeAnArtisanPage() {
   //    alerts both depend on a working address.
   if (!user.isVerified) {
     redirect(
-      `${ROUTES.verifyEmail}?email=${encodeURIComponent(user.email ?? "")}&next=${encodeURIComponent("/become-an-artisan")}`,
+      `${ROUTES.verifyEmail}?email=${encodeURIComponent(user.email ?? "")}&next=${encodeURIComponent("/list-your-services")}`,
     );
   }
 
@@ -63,7 +63,7 @@ export default async function BecomeAnArtisanPage() {
       <p className="text-muted-foreground mt-2">
         You&apos;re signed in as{" "}
         <span className="text-foreground font-medium">{user.email}</span>. Add
-        artisan access to this account — you don&apos;t need a second one.
+        professional access to this account — you don&apos;t need a second one.
       </p>
 
       <Card className="mt-8">
@@ -75,7 +75,7 @@ export default async function BecomeAnArtisanPage() {
               "You'll go straight to your profile editor",
               "Add your trades — list every one you do, up to eight",
               "Add your area, phone number and photos of finished work",
-              "Submit for review; we check every artisan before they go live",
+              "Submit for review; we check every professional before they go live",
             ].map((step) => (
               <li key={step} className="flex items-start gap-2">
                 <Check className="mt-0.5 size-4 shrink-0 text-emerald-600" />
@@ -96,7 +96,7 @@ export default async function BecomeAnArtisanPage() {
 
           <p className="text-muted-foreground text-xs">
             You keep your customer account exactly as it is — you can still
-            hire other artisans yourself.
+            hire other professionals yourself.
           </p>
         </CardContent>
       </Card>
@@ -104,7 +104,7 @@ export default async function BecomeAnArtisanPage() {
       <p className="text-muted-foreground mt-6 text-sm">
         Just browsing?{" "}
         <Link href={ROUTES.directory} className="text-foreground underline">
-          Find an artisan instead
+          Find a professional instead
         </Link>
       </p>
     </main>

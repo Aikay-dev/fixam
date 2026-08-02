@@ -24,8 +24,8 @@ import type { ServiceScope } from "@/lib/artisan/service-pages";
  *
  * The page is `noindex` instead (set by the route), so it stays out of search
  * until it has real content, and becomes indexable automatically the moment
- * an artisan is approved for the trade. Meanwhile it does useful work: it is
- * the best possible recruitment pitch to an artisan searching for their own
+ * a professional is approved for the trade. Meanwhile it does useful work: it is
+ * the best possible recruitment pitch to a professional searching for their own
  * trade.
  *
  * The location variants (~60,000) are a different story and still 404 — that
@@ -52,7 +52,7 @@ export function ServiceEmpty({
           <BreadcrumbSeparator />
           <BreadcrumbItem>
             <BreadcrumbLink asChild>
-              <Link href={ROUTES.directory}>Artisans</Link>
+              <Link href={ROUTES.directory}>Professionals</Link>
             </BreadcrumbLink>
           </BreadcrumbItem>
           <BreadcrumbSeparator />
@@ -82,12 +82,12 @@ export function ServiceEmpty({
 
         <div className="mt-6 flex flex-wrap justify-center gap-2">
           <Button asChild>
-            <Link href={ROUTES.joinAsArtisan}>
+            <Link href={ROUTES.listYourServices}>
               List your services free
             </Link>
           </Button>
           <Button asChild variant="outline">
-            <Link href={ROUTES.directory}>Browse all artisans</Link>
+            <Link href={ROUTES.directory}>Browse all professionals</Link>
           </Button>
         </div>
 
@@ -100,7 +100,7 @@ export function ServiceEmpty({
       {otherTrades.length > 0 ? (
         <section className="mt-10">
           <h2 className="text-lg font-semibold">
-            Trades with artisans available now
+            Trades with professionals available now
           </h2>
           <p className="text-muted-foreground mt-1 text-sm">
             Looking to hire? These have people listed today.

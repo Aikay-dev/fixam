@@ -76,7 +76,7 @@ export default async function AdminLeadsPage() {
         <div>
           <h1 className="text-2xl font-bold tracking-tight">Leads</h1>
           <p className="text-muted-foreground text-sm">
-            Every time a customer took an artisan&apos;s number.
+            Every time a customer took a professional&apos;s number.
           </p>
         </div>
 
@@ -93,7 +93,7 @@ export default async function AdminLeadsPage() {
           <CardContent className="py-16 text-center">
             <p className="font-medium">No leads yet</p>
             <p className="text-muted-foreground mt-1 text-sm">
-              Leads appear here the moment a customer unlocks an artisan&apos;s
+              Leads appear here the moment a customer unlocks a professional&apos;s
               number.
             </p>
           </CardContent>
@@ -105,7 +105,7 @@ export default async function AdminLeadsPage() {
               <TableHeader>
                 <TableRow>
                   <TableHead>When</TableHead>
-                  <TableHead>Artisan</TableHead>
+                  <TableHead>Professional</TableHead>
                   <TableHead>Trade</TableHead>
                   <TableHead>Customer</TableHead>
                   <TableHead>Via</TableHead>
@@ -156,7 +156,7 @@ export default async function AdminLeadsPage() {
       )}
 
       <p className="text-muted-foreground text-xs">
-        Every lead is currently free to the artisan. This log is the demand
+        Every lead is currently free to the professional. This log is the demand
         evidence for Stage One and becomes the billing ledger in Stage Two —
         no migration needed.
       </p>

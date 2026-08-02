@@ -1,7 +1,7 @@
 /**
  * Nigeria: 36 states + the FCT, with their Local Government Areas.
  *
- * All states are seeded so an artisan anywhere can register, but only those
+ * All states are seeded so a professional anywhere can register, but only those
  * flagged `isLaunchCity` are promoted on the marketing surface. Lagos first,
  * per the proposal; Abuja and Port Harcourt are the obvious next two.
  *

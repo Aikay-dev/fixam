@@ -143,8 +143,8 @@ export function EmailLayout({
                 paddingTop: footerNote ? 0 : "16px",
               }}
             >
-              Fixam — Nigeria&apos;s trusted artisan marketplace. Free for
-              customers and artisans.
+              Fixam — Nigeria&apos;s marketplace for trusted artisans and
+              professionals. Free for customers, free to list.
             </Text>
             <Text style={styles.footerText}>
               &copy; {year} Fixam ·{" "}

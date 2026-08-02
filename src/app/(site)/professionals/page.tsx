@@ -12,17 +12,17 @@ import { Category } from "@/models/category";
 import { Lga, State } from "@/models/location";
 
 export const metadata: Metadata = {
-  title: "Find a trusted artisan near you",
+  title: "Find a trusted professional near you",
   description:
     "Browse vetted plumbers, electricians, carpenters, AC technicians and more across Nigeria. Real reviews, real photos of past work, and free contact.",
-  alternates: { canonical: "/artisans" },
+  alternates: { canonical: "/professionals" },
 };
 
 function first(value: string | string[] | undefined): string | undefined {
   return Array.isArray(value) ? value[0] : value;
 }
 
-export default async function DirectoryPage(props: PageProps<"/artisans">) {
+export default async function DirectoryPage(props: PageProps<"/professionals">) {
   const sp = await props.searchParams;
 
   const q = first(sp.q);
@@ -79,7 +79,7 @@ export default async function DirectoryPage(props: PageProps<"/artisans">) {
     <main className="mx-auto max-w-6xl px-4 py-8 sm:px-6">
       <header className="mb-6">
         <h1 className="text-3xl font-bold tracking-tight">
-          Find a trusted artisan
+          Find a trusted professional
         </h1>
         <p className="text-muted-foreground mt-1">
           Browse, compare and connect directly. Free, always.
@@ -95,21 +95,21 @@ export default async function DirectoryPage(props: PageProps<"/artisans">) {
       <div className="mt-6">
         <p className="text-muted-foreground text-sm" aria-live="polite">
           {results.total === 0
-            ? "No artisans found"
-            : `${results.total} artisan${results.total === 1 ? "" : "s"} found`}
+            ? "No professionals found"
+            : `${results.total} professional${results.total === 1 ? "" : "s"} found`}
         </p>
       </div>
 
       {results.artisans.length > 0 ? (
         <>
           <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {results.artisans.map((artisan, index) => (
+            {results.artisans.map((professional, index) => (
               <ArtisanCard
-                key={artisan.id}
-                artisan={artisan}
+                key={professional.id}
+                professional={professional}
                 tradeName={
-                  artisan.tradeIds.length
-                    ? categoryNames.get(artisan.tradeIds[0]!)
+                  professional.tradeIds.length
+                    ? categoryNames.get(professional.tradeIds[0]!)
                     : undefined
                 }
                 priority={index < 3}
@@ -161,7 +161,7 @@ export default async function DirectoryPage(props: PageProps<"/artisans">) {
           <p className="text-muted-foreground mx-auto mt-1 max-w-sm text-sm text-balance">
             {q || categoryId || stateId
               ? "Try widening your search — fewer filters, or a nearby area."
-              : "Fixam is just getting started. Artisans are being added and reviewed now."}
+              : "Fixam is just getting started. Professionals are being added and reviewed now."}
           </p>
           <div className="mt-5 flex flex-wrap justify-center gap-2">
             {q || categoryId || stateId ? (
@@ -170,8 +170,8 @@ export default async function DirectoryPage(props: PageProps<"/artisans">) {
               </Button>
             ) : null}
             <Button asChild>
-              <Link href={ROUTES.joinAsArtisan}>
-                Are you an artisan? List free
+              <Link href={ROUTES.listYourServices}>
+                Are you a professional? List free
               </Link>
             </Button>
           </div>

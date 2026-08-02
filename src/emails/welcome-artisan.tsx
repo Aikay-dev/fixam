@@ -48,7 +48,7 @@ export default function WelcomeArtisan({
       <Text style={text.paragraph}>
         Once you submit it, our team reviews it before it goes live. That review
         is what keeps fake listings off Fixam — and it&apos;s why customers
-        trust the artisans they find here.
+        trust the professionals they find here.
       </Text>
 
       <Text style={text.small}>

@@ -93,9 +93,9 @@ export function DirectoryFilters({
         <Input
           value={query}
           onChange={(e) => setQuery(e.target.value)}
-          placeholder="Plumber, AC repair, POP, generator…"
+          placeholder="Plumber, AC repair, POP, lawyer, web design…"
           className="flex-1"
-          aria-label="Search artisans"
+          aria-label="Search professionals"
         />
         <Button type="submit" disabled={pending}>
           Search
@@ -217,7 +217,7 @@ export function DirectoryFilters({
             onCheckedChange={(v) => apply({ verified: v ? "1" : null })}
           />
           <Label htmlFor="filter-verified" className="text-sm font-normal">
-            Verified artisans only
+            Verified professionals only
           </Label>
         </div>
 

@@ -1,5 +1,5 @@
 /**
- * Fixam's trade taxonomy.
+ * Fixam's service taxonomy.
  *
  * Built by merging the breadth of the UK marketplaces (MyBuilder,
  * Checkatrade) with the trades Nigerians actually hire — POP ceilings,
@@ -7,8 +7,17 @@
  * septic evacuation, solar/inverter. Those last ones are exactly where
  * wrkman and LaborHack are thin, and each one becomes its own SEO page.
  *
+ * It deliberately spans manual trades AND professional services — a lawyer,
+ * an architect and a web designer are hired through the same motion as a
+ * plumber (find someone nearby, check their reviews, call them), so they
+ * belong in the same directory. That breadth is also what stops Fixam from
+ * being a one-visit site: you find a plumber this month and an accountant in
+ * January.
+ *
  * `synonyms` matter as much as names: nobody searches "refrigeration
- * technician", they search "fridge engineer" or "AC guy".
+ * technician", they search "fridge engineer" or "AC guy". The same applies at
+ * the professional end — "CAC registration" is the real query, not
+ * "post-incorporation filing".
  */
 
 export type SeedCategory = {
@@ -557,14 +566,236 @@ export const CATEGORY_GROUPS: SeedCategoryGroup[] = [
         synonyms: ["survey plan", "land survey", "beacon"],
       },
       {
-        name: "Structural Engineer",
+        // Slug stays `structural-engineer` — it is already seeded and linked.
+        // Renaming the display name is free; renaming the slug would orphan
+        // every profile and indexed URL pointing at it.
+        name: "Civil & Structural Engineer",
         slug: "structural-engineer",
-        synonyms: ["structural design", "structural drawing", "integrity test"],
+        synonyms: [
+          "civil engineer",
+          "structural design",
+          "structural drawing",
+          "integrity test",
+          "soil test",
+        ],
+        description:
+          "Structural design and drawings, integrity tests, and civil works supervision.",
+      },
+      {
+        name: "Mechanical & Electrical Engineer",
+        slug: "mechanical-electrical-engineer",
+        synonyms: ["M&E", "MEP", "building services", "HVAC design"],
+        description:
+          "M&E design and supervision for buildings — power, HVAC, lifts and plumbing systems.",
+      },
+      {
+        name: "Town Planner",
+        slug: "town-planner",
+        synonyms: [
+          "building approval",
+          "planning permit",
+          "development permit",
+          "physical planning",
+        ],
+        description:
+          "Planning permits, building approvals and development control paperwork.",
+      },
+      {
+        name: "Construction Project Manager",
+        slug: "construction-project-manager",
+        synonyms: [
+          "project manager",
+          "site supervisor",
+          "construction supervision",
+          "clerk of works",
+        ],
       },
       {
         name: "Estate & Property Manager",
         slug: "estate-property-manager",
         synonyms: ["estate agent", "property management", "facility manager"],
+      },
+    ],
+  },
+
+  {
+    name: "Legal & Financial",
+    slug: "legal-financial",
+    icon: "Scale",
+    children: [
+      {
+        name: "Lawyer",
+        slug: "lawyer",
+        synonyms: [
+          "legal practitioner",
+          "solicitor",
+          "barrister",
+          "attorney",
+          "legal advice",
+          "land documentation",
+          "tenancy agreement",
+          "C of O",
+        ],
+        description:
+          "Agreements, land and property documentation, company matters and court representation.",
+      },
+      {
+        name: "Accountant & Auditor",
+        slug: "accountant-auditor",
+        synonyms: [
+          "accounting",
+          "bookkeeping",
+          "audit",
+          "financial statement",
+          "payroll",
+        ],
+        description:
+          "Bookkeeping, management accounts, audits and statutory financial statements.",
+      },
+      {
+        name: "Tax Consultant",
+        slug: "tax-consultant",
+        synonyms: ["tax", "TIN", "FIRS", "tax clearance", "VAT filing", "PAYE"],
+        description:
+          "Tax registration and filing, TIN and tax clearance certificates.",
+      },
+      {
+        name: "Business Registration & CAC",
+        slug: "business-registration-cac",
+        synonyms: [
+          "CAC",
+          "CAC registration",
+          "business name registration",
+          "company registration",
+          "incorporation",
+          "post-incorporation",
+        ],
+        description:
+          "Business name and company registration, and post-incorporation filings.",
+      },
+      {
+        name: "Insurance Broker",
+        slug: "insurance-broker",
+        synonyms: [
+          "insurance",
+          "insurance agent",
+          "car insurance",
+          "property insurance",
+        ],
+      },
+    ],
+  },
+
+  {
+    name: "Digital & Technology",
+    slug: "digital-technology",
+    icon: "Monitor",
+    children: [
+      {
+        name: "Web Designer & Developer",
+        slug: "web-designer-developer",
+        synonyms: [
+          "web design",
+          "website design",
+          "web developer",
+          "website developer",
+          "build a website",
+          "WordPress",
+          "e-commerce website",
+        ],
+        description:
+          "Business websites, online stores, redesigns and ongoing website maintenance.",
+      },
+      {
+        name: "Mobile App Developer",
+        slug: "mobile-app-developer",
+        synonyms: [
+          "app developer",
+          "android developer",
+          "iOS developer",
+          "build an app",
+          "mobile app",
+        ],
+      },
+      {
+        name: "Software Developer",
+        slug: "software-developer",
+        synonyms: [
+          "programmer",
+          "software engineer",
+          "backend developer",
+          "custom software",
+          "API integration",
+        ],
+      },
+      {
+        name: "IT Support Specialist",
+        slug: "it-support-specialist",
+        synonyms: [
+          "IT support",
+          "IT consultant",
+          "computer support",
+          "network administrator",
+          "systems support",
+          "office IT setup",
+        ],
+        description:
+          "Office IT setup and support — computers, networks, email, backups and user support.",
+      },
+      {
+        name: "Cybersecurity Specialist",
+        slug: "cybersecurity-specialist",
+        synonyms: [
+          "cyber security",
+          "IT security",
+          "penetration testing",
+          "security audit",
+        ],
+      },
+      {
+        name: "UI/UX Designer",
+        slug: "ui-ux-designer",
+        synonyms: [
+          "product designer",
+          "app design",
+          "user interface",
+          "user experience",
+          "Figma designer",
+        ],
+      },
+      {
+        name: "Graphic Designer",
+        slug: "graphic-designer",
+        synonyms: [
+          "logo design",
+          "branding",
+          "flyer design",
+          "banner design",
+          "brand identity",
+        ],
+      },
+      {
+        name: "Digital Marketing & SEO",
+        slug: "digital-marketing-seo",
+        synonyms: [
+          "social media manager",
+          "SEO",
+          "online marketing",
+          "Google ads",
+          "Instagram ads",
+          "content marketing",
+        ],
+      },
+      {
+        name: "Data Analyst",
+        slug: "data-analyst",
+        synonyms: [
+          "data analysis",
+          "business intelligence",
+          "Power BI",
+          "dashboard",
+          "Excel analyst",
+        ],
       },
     ],
   },

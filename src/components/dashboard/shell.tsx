@@ -21,7 +21,7 @@ export type NavItem = {
 /**
  * Shared dashboard chrome for /pro, /account and /admin.
  *
- * Mobile-first: the sidebar is a slide-over below `lg`, because most artisans
+ * Mobile-first: the sidebar is a slide-over below `lg`, because most professionals
  * will only ever open this on a phone.
  */
 export function DashboardShell({

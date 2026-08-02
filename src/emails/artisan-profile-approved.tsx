@@ -39,7 +39,7 @@ export default function ArtisanProfileApproved({
         </Text>
         <Text style={{ ...text.small, margin: 0 }}>
           When a customer picks you, they&apos;ll unlock your number and
-          we&apos;ll email you straight away. Reply fast — artisans who answer
+          we&apos;ll email you straight away. Reply fast — professionals who answer
           within the hour win far more jobs than those who reply the next day.
         </Text>
       </Section>
@@ -63,6 +63,6 @@ export default function ArtisanProfileApproved({
 
 ArtisanProfileApproved.PreviewProps = {
   name: "Emeka",
-  profileUrl: "https://fix-am.ng/artisans/emeka-okafor-plumber-lekki-a4f2",
+  profileUrl: "https://fix-am.ng/professionals/emeka-okafor-plumber-lekki-a4f2",
   dashboardUrl: "https://fix-am.ng/pro",
 } satisfies ArtisanProfileApprovedProps;

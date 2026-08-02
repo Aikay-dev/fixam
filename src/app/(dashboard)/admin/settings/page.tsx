@@ -61,7 +61,7 @@ export default async function AdminSettingsPage() {
         <CardContent className="grid gap-3">
           <Row
             label="Pay-per-lead credits"
-            hint="Charging artisans to unlock a lead. Switched on only once the free platform has proven demand."
+            hint="Charging professionals to unlock a lead. Switched on only once the free platform has proven demand."
             value={
               <Badge variant={config.monetizationEnabled ? "default" : "outline"}>
                 {config.monetizationEnabled ? "ON" : "OFF"}
@@ -77,7 +77,7 @@ export default async function AdminSettingsPage() {
 
           <p className="text-muted-foreground bg-muted/50 rounded-md p-3 text-xs">
             Deliberately read-only in the UI. Turning this on affects what every
-            artisan pays, so it is a deployment decision made in the database,
+            professional pays, so it is a deployment decision made in the database,
             not a toggle anyone can hit by accident. The switch itself lives in
             one function — <code>canRevealContact()</code> — and{" "}
             <code>npm run test:stage-two</code> proves nothing else reads it.
@@ -136,7 +136,7 @@ export default async function AdminSettingsPage() {
           />
           <Row
             label="Email verification required to reveal"
-            hint="What makes a lead worth anything to the artisan."
+            hint="What makes a lead worth anything to the professional."
             value={
               <Badge
                 variant={
@@ -148,7 +148,7 @@ export default async function AdminSettingsPage() {
             }
           />
           <Row
-            label="Auto-publish artisans"
+            label="Auto-publish professionals"
             hint="When off, every profile needs a human approval before going live."
             value={
               <Badge variant={config.autoPublishArtisans ? "destructive" : "default"}>

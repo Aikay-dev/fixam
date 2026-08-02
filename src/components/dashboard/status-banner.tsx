@@ -12,8 +12,8 @@ import { SITE, type ArtisanStatus } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 
 /**
- * The single most important thing on the artisan dashboard: whether they are
- * actually visible to customers. An artisan who thinks they're live but is
+ * The single most important thing on the professional dashboard: whether they are
+ * actually visible to customers. A professional who thinks they're live but is
  * sitting in draft will quietly conclude Fixam doesn't work.
  */
 export function ArtisanStatusBanner({

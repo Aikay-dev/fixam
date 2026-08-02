@@ -398,20 +398,29 @@ async function main() {
   // =====================================================================
   step(6, "PUBLIC — unapproved profile is invisible");
   // =====================================================================
-  const hiddenProfile = await artisanSession.fetch(`/artisans/${slug}`);
+  const hiddenProfile = await artisanSession.fetch(`/professionals/${slug}`);
   check("profile page 404s before approval", hiddenProfile.status === 404, `got ${hiddenProfile.status}`);
 
   // Assert on the SLUG, not the display name: the search box echoes whatever
   // was typed back into the input, so a name match here is a false positive.
   const hiddenSearch = await (
-    await fetch(`${BASE}/artisans?q=${encodeURIComponent(ARTISAN.name)}`)
+    await fetch(`${BASE}/professionals?q=${encodeURIComponent(ARTISAN.name)}`)
   ).text();
-  check("no result card links to the profile", !hiddenSearch.includes(`/artisans/${slug}`));
-  check("directory reports no matches", hiddenSearch.includes("No artisans found"));
+  check("no result card links to the profile", !hiddenSearch.includes(`/professionals/${slug}`));
+
+  // Asserted with a query that CANNOT match anything, not with the test
+  // artisan's name. The demo directory contains real people called "Tunde"
+  // and "Adeyemi", so searching the fixture name legitimately returns hits
+  // and the empty state never renders — that made this check fail for a
+  // reason that had nothing to do with the moderation gate it exists to test.
+  const impossible = await (
+    await fetch(`${BASE}/professionals?q=zzzzqqqxnomatch`)
+  ).text();
+  check("directory reports no matches", impossible.includes("No professionals found"));
 
   // And it must not leak into an unfiltered browse either.
-  const browseAll = await (await fetch(`${BASE}/artisans`)).text();
-  check("absent from the unfiltered directory", !browseAll.includes(`/artisans/${slug}`));
+  const browseAll = await (await fetch(`${BASE}/professionals`)).text();
+  check("absent from the unfiltered directory", !browseAll.includes(`/professionals/${slug}`));
 
   // =====================================================================
   step(7, "ADMIN — reviews and approves");
@@ -458,7 +467,7 @@ async function main() {
   // =====================================================================
   step(8, "PUBLIC — approved profile is now visible under EVERY trade");
   // =====================================================================
-  const liveProfile = await fetch(`${BASE}/artisans/${slug}`);
+  const liveProfile = await fetch(`${BASE}/professionals/${slug}`);
   const liveHtml = await liveProfile.text();
   check("profile page loads", liveProfile.status === 200);
   check("shows the artisan's name", liveHtml.includes(ARTISAN.name));
@@ -469,7 +478,7 @@ async function main() {
 
   for (const trade of tradeDocs) {
     const html = await (
-      await fetch(`${BASE}/artisans?categoryId=${String(trade._id)}`)
+      await fetch(`${BASE}/professionals?categoryId=${String(trade._id)}`)
     ).text();
     check(`findable under "${trade.name}"`, html.includes(ARTISAN.name));
   }

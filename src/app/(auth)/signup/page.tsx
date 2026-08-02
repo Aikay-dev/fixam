@@ -9,7 +9,7 @@ import { features } from "@/lib/env";
 export const metadata: Metadata = {
   title: "Create your account",
   description:
-    "Sign up free to see artisan phone numbers and connect on WhatsApp.",
+    "Sign up free to see professional phone numbers and connect on WhatsApp.",
   robots: { index: false, follow: true },
 };
 
@@ -19,10 +19,10 @@ export default async function SignupPage(props: PageProps<"/signup">) {
   const user = await getSessionUser();
 
   if (user) {
-    // Someone already signed in landing on artisan signup wants to list
+    // Someone already signed in landing on professional signup wants to list
     // their services, not create a second account. Send them to the flow
     // that adds the role to the account they already have.
-    if (role === "artisan") redirect(ROUTES.joinAsArtisan);
+    if (role === "artisan") redirect(ROUTES.listYourServices);
     redirect(typeof next === "string" ? next : "/");
   }
 

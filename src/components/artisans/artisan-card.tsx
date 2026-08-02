@@ -16,17 +16,17 @@ import { cn } from "@/lib/utils";
  * shortcut here would be a hole in the model.
  */
 export function ArtisanCard({
-  artisan,
+  professional,
   tradeName,
   locationName,
   priority = false,
 }: {
-  artisan: PublicArtisan;
+  professional: PublicArtisan;
   tradeName?: string;
   locationName?: string;
   priority?: boolean;
 }) {
-  const initials = artisan.displayName
+  const initials = professional.displayName
     .split(" ")
     .slice(0, 2)
     .map((w) => w[0])
@@ -35,14 +35,14 @@ export function ArtisanCard({
 
   return (
     <Link
-      href={ROUTES.artisan(artisan.slug)}
+      href={ROUTES.professional(professional.slug)}
       className="group focus-visible:ring-ring hover:border-primary/40 block rounded-lg border p-4 transition hover:shadow-sm focus-visible:ring-2 focus-visible:outline-none"
     >
       <div className="flex gap-3">
         <div className="bg-muted relative size-14 shrink-0 overflow-hidden rounded-full">
-          {artisan.avatarUrl ? (
+          {professional.avatarUrl ? (
             <Image
-              src={artisan.avatarUrl}
+              src={professional.avatarUrl}
               alt=""
               fill
               sizes="56px"
@@ -59,9 +59,9 @@ export function ArtisanCard({
         <div className="min-w-0 flex-1">
           <div className="flex items-start gap-1.5">
             <h3 className="group-hover:text-primary truncate font-semibold">
-              {artisan.displayName}
+              {professional.displayName}
             </h3>
-            {artisan.isVerified ? (
+            {professional.isVerified ? (
               <BadgeCheck
                 className="mt-0.5 size-4 shrink-0 text-emerald-600"
                 aria-label="Verified by Fixam"
@@ -75,44 +75,44 @@ export function ArtisanCard({
 
           <div className="mt-1.5">
             <RatingStars
-              value={artisan.rating.average}
-              count={artisan.rating.count}
+              value={professional.rating.average}
+              count={professional.rating.count}
             />
           </div>
         </div>
       </div>
 
-      {artisan.bio ? (
+      {professional.bio ? (
         <p className="text-muted-foreground line-clamp-2-safe mt-3 text-sm">
-          {artisan.bio}
+          {professional.bio}
         </p>
       ) : null}
 
       <div className="mt-3 flex flex-wrap items-center gap-2">
-        {locationName || artisan.location.areaText ? (
+        {locationName || professional.location.areaText ? (
           <span className="text-muted-foreground flex items-center gap-1 text-xs">
             <MapPin className="size-3" />
-            {artisan.location.areaText || locationName}
+            {professional.location.areaText || locationName}
           </span>
         ) : null}
 
-        {artisan.yearsExperience > 0 ? (
+        {professional.yearsExperience > 0 ? (
           <Badge variant="secondary" className="text-xs">
-            {artisan.yearsExperience} yr
-            {artisan.yearsExperience === 1 ? "" : "s"} experience
+            {professional.yearsExperience} yr
+            {professional.yearsExperience === 1 ? "" : "s"} experience
           </Badge>
         ) : null}
 
-        {!artisan.acceptingJobs ? (
+        {!professional.acceptingJobs ? (
           <Badge variant="outline" className="text-xs">
             Fully booked
           </Badge>
         ) : null}
 
-        {artisan.portfolio.length > 0 ? (
+        {professional.portfolio.length > 0 ? (
           <span className="text-muted-foreground text-xs">
-            {artisan.portfolio.length} photo
-            {artisan.portfolio.length === 1 ? "" : "s"} of work
+            {professional.portfolio.length} photo
+            {professional.portfolio.length === 1 ? "" : "s"} of work
           </span>
         ) : null}
       </div>

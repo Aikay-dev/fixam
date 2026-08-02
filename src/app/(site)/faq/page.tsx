@@ -20,43 +20,43 @@ export const metadata: Metadata = {
 const FAQS: { q: string; a: string }[] = [
   {
     q: "Is Fixam free?",
-    a: "Yes. It is free for customers to browse and contact artisans, and free for artisans to list. There is no joining fee, no monthly charge and no commission on any job.",
+    a: "Yes. It is free for customers to browse and contact professionals, and free for professionals to list. There is no joining fee, no monthly charge and no commission on any job.",
   },
   {
     q: "Why do I need an account to see a phone number?",
-    a: "Two reasons. It stops artisans' numbers being scraped and sold, and it means the people who contact them are real. Artisans get far fewer wasted calls, so the ones you make are more likely to be answered. Creating an account is free and takes a minute.",
+    a: "Two reasons. It stops professionals' numbers being scraped and sold, and it means the people who contact them are real. Professionals get far fewer wasted calls, so the ones you make are more likely to be answered. Creating an account is free and takes a minute.",
   },
   {
     q: "Does Fixam handle my payment?",
-    a: "No. You pay the artisan directly, on whatever terms you agree between you. Fixam never holds your money and never takes a cut. Agree the price before work starts — that single habit prevents most disputes.",
+    a: "No. You pay the professional directly, on whatever terms you agree between you. Fixam never holds your money and never takes a cut. Agree the price before work starts — that single habit prevents most disputes.",
   },
   {
     q: "What does the verified badge mean?",
-    a: "It means our team has personally checked that artisan's details. Every artisan is reviewed before going live, but the badge is a further step.",
+    a: "It means our team has personally checked that professional's details. Every professional is reviewed before going live, but the badge is a further step.",
   },
   {
     q: "Can I trust the reviews?",
-    a: "Only a customer who actually unlocked an artisan's number can leave a review, and only once per contact. That means reviews come from people who genuinely got in touch — not from competitors or strangers.",
+    a: "Only a customer who actually unlocked a professional's number can leave a review, and only once per contact. That means reviews come from people who genuinely got in touch — not from competitors or strangers.",
   },
   {
-    q: "I'm an artisan and I do more than one trade. Can I list them all?",
-    a: "Yes. You can list up to eight trades on one profile, and you'll appear in searches for each of them. The first trade you pick becomes your main one and appears in your profile link.",
+    q: "I offer more than one service. Can I list them all?",
+    a: "Yes. You can list up to eight services on one profile, and you'll appear in searches for each of them. The first one you pick becomes your main service and appears in your profile link.",
   },
   {
     q: "How long does approval take?",
     a: "Usually a day or two. We check every profile before it goes live. If something needs changing we'll email you exactly what, with a link straight back to your profile.",
   },
   {
-    q: "What if an artisan does bad work?",
-    a: "Leave an honest review — it's the most useful thing you can do for the next customer. You can also report a profile, and our team will look into it. Fixam checks that artisans are real and reachable, but we don't guarantee the work itself.",
+    q: "What if a professional does bad work?",
+    a: "Leave an honest review — it's the most useful thing you can do for the next customer. You can also report a profile, and our team will look into it. Fixam checks that professionals are real and reachable, but we don't guarantee the work itself.",
   },
   {
     q: "Which cities does Fixam cover?",
-    a: "Artisans can register anywhere in Nigeria. We're focusing on Lagos first, with Abuja and Port Harcourt next, so those areas have the most artisans right now.",
+    a: "Professionals can register anywhere in Nigeria. We're focusing on Lagos first, with Abuja and Port Harcourt next, so those areas have the most professionals right now.",
   },
   {
-    q: "Will Fixam ever charge artisans?",
-    a: "Not while we're growing. If we do introduce charges later, it would be a small fee for artisans to unlock a customer enquiry — never a charge to customers, and never a commission on your work. Artisans would be told well in advance.",
+    q: "Will Fixam ever charge professionals?",
+    a: "Not while we're growing. If we do introduce charges later, it would be a small fee for professionals to unlock a customer enquiry — never a charge to customers, and never a commission on your work. Professionals would be told well in advance.",
   },
 ];
 
@@ -121,7 +121,7 @@ export default function FaqPage() {
           href={ROUTES.directory}
           className="text-primary text-sm underline"
         >
-          Find an artisan
+          Find a professional
         </Link>
         <Link href="/how-it-works" className="text-primary text-sm underline">
           How Fixam works

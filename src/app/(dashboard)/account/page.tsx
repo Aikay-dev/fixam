@@ -36,7 +36,7 @@ export default async function AccountPage() {
           <CardContent className="pt-6">
             <div className="text-muted-foreground flex items-center gap-2 text-sm">
               <Phone className="size-4" />
-              Artisans contacted
+              Professionals contacted
             </div>
             <p className="mt-2 text-3xl font-bold tabular-nums">
               {contactCount}
@@ -56,7 +56,7 @@ export default async function AccountPage() {
               Need something done?
             </div>
             <Button asChild size="sm" className="justify-self-start">
-              <Link href={ROUTES.directory}>Find an artisan</Link>
+              <Link href={ROUTES.directory}>Find a professional</Link>
             </Button>
           </CardContent>
         </Card>
@@ -71,7 +71,7 @@ export default async function AccountPage() {
               add as many trades as you do.
             </p>
             <Button asChild variant="outline" size="sm">
-              <Link href={ROUTES.joinAsArtisan}>List free</Link>
+              <Link href={ROUTES.listYourServices}>List free</Link>
             </Button>
           </CardContent>
         </Card>

@@ -55,15 +55,15 @@ export default function ContactPage() {
           },
           {
             icon: <Wrench className="size-4" />,
-            title: "You're an artisan wanting to join",
+            title: "You're a professional wanting to join",
             body: "It's free and you can set your profile up yourself right now.",
-            href: ROUTES.joinAsArtisan,
+            href: ROUTES.listYourServices,
             label: "List your services",
           },
           {
             icon: <ShieldAlert className="size-4" />,
-            title: "Reporting a problem with an artisan",
-            body: "Tell us the artisan's name or profile link and what happened. We take fake profiles and wrong numbers seriously.",
+            title: "Reporting a problem with a professional",
+            body: "Tell us the professional's name or profile link and what happened. We take fake profiles and wrong numbers seriously.",
             href: `mailto:${SITE.supportEmail}?subject=Reporting%20an%20artisan`,
             label: "Email us the details",
           },
@@ -90,7 +90,7 @@ export default function ContactPage() {
 
       <p className="text-muted-foreground mt-8 text-sm">
         A note on payments: Fixam never handles money for a job, so we
-        can&apos;t issue refunds. If you paid an artisan directly and
+        can&apos;t issue refunds. If you paid a professional directly and
         something went wrong, tell us — we&apos;ll investigate the profile and
         act on it — but the payment itself is between you and them.
       </p>

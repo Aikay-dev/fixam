@@ -15,13 +15,13 @@ export default function ArtisanProfileSubmitted({
 
       <Text style={text.paragraph}>
         Thanks{name ? `, ${name}` : ""} — your profile is with our team now.
-        We check every artisan before they go live.
+        We check every professional before they go live.
       </Text>
 
       <Section style={infoPanel}>
         <Text style={{ ...text.small, margin: 0 }}>
           <strong>Why we review:</strong> it&apos;s what stops fake listings
-          getting onto Fixam. Customers trust the artisans here because
+          getting onto Fixam. Customers trust the professionals here because
           somebody actually looked — and that trust is what brings you work.
         </Text>
       </Section>

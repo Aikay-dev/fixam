@@ -17,7 +17,7 @@ export const metadata: Metadata = {
 };
 
 /**
- * Artisans this customer has already unlocked.
+ * Professionals this customer has already unlocked.
  *
  * Showing the number here is correct: they already revealed it, a lead is
  * already recorded, and making them re-unlock it would burn their daily quota
@@ -72,7 +72,7 @@ export default async function AccountContactsPage() {
       <div>
         <h1 className="text-2xl font-bold tracking-tight">My contacts</h1>
         <p className="text-muted-foreground text-sm">
-          Artisans whose numbers you&apos;ve unlocked.
+          Professionals whose numbers you&apos;ve unlocked.
         </p>
       </div>
 
@@ -81,11 +81,11 @@ export default async function AccountContactsPage() {
           <CardContent className="py-16 text-center">
             <p className="font-medium">Nothing here yet</p>
             <p className="text-muted-foreground mt-1 text-sm">
-              Artisans you contact will be saved here so you can find their
+              Professionals you contact will be saved here so you can find their
               number again.
             </p>
             <Button asChild className="mt-5">
-              <Link href={ROUTES.directory}>Find an artisan</Link>
+              <Link href={ROUTES.directory}>Find a professional</Link>
             </Button>
           </CardContent>
         </Card>
@@ -101,7 +101,7 @@ export default async function AccountContactsPage() {
                   <div className="flex flex-wrap items-start justify-between gap-3">
                     <div className="min-w-0">
                       <Link
-                        href={ROUTES.artisan(contact.slug)}
+                        href={ROUTES.professional(contact.slug)}
                         className="hover:text-primary font-semibold"
                       >
                         {contact.displayName}

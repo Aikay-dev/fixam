@@ -28,7 +28,7 @@ type Action =
  * Moderation controls.
  *
  * Reject and suspend force a written reason, because it is emailed verbatim
- * to the artisan. "Rejected" with no explanation just loses them.
+ * to the professional. "Rejected" with no explanation just loses them.
  */
 export function ArtisanActions({
   id,
@@ -152,8 +152,8 @@ export function ArtisanActions({
             </DialogTitle>
             <DialogDescription>
               {dialog === "reject"
-                ? "This is emailed to the artisan word for word. Be specific about what to change so they can fix it in one go."
-                : "The artisan will be removed from the directory and told why."}
+                ? "This is emailed to the professional word for word. Be specific about what to change so they can fix it in one go."
+                : "The professional will be removed from the directory and told why."}
             </DialogDescription>
           </DialogHeader>
 

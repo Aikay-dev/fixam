@@ -22,12 +22,12 @@ export type LinkGroup = { name: string; slug: string; count: number };
  * The /services/* landing page.
  *
  * Three things make this rank rather than read as a thin doorway page:
- * genuine per-category copy, real artisan results, and internal links that
+ * genuine per-category copy, real professional results, and internal links that
  * only point at places which actually have someone.
  */
 export function ServiceLanding({
   scope,
-  artisans,
+  professionals,
   total,
   locationLabel,
   nearby,
@@ -36,7 +36,7 @@ export function ServiceLanding({
   nearbyHrefPrefix,
 }: {
   scope: ServiceScope;
-  artisans: PublicArtisan[];
+  professionals: PublicArtisan[];
   total: number;
   locationLabel: string;
   nearby: LinkGroup[];
@@ -60,7 +60,7 @@ export function ServiceLanding({
           <BreadcrumbSeparator />
           <BreadcrumbItem>
             <BreadcrumbLink asChild>
-              <Link href={ROUTES.directory}>Artisans</Link>
+              <Link href={ROUTES.directory}>Professionals</Link>
             </BreadcrumbLink>
           </BreadcrumbItem>
           <BreadcrumbSeparator />
@@ -110,10 +110,10 @@ export function ServiceLanding({
       </header>
 
       <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {artisans.map((artisan, index) => (
+        {professionals.map((professional, index) => (
           <ArtisanCard
-            key={artisan.id}
-            artisan={artisan}
+            key={professional.id}
+            professional={professional}
             tradeName={trade}
             locationName={locationLabel}
             priority={index < 3}
@@ -121,7 +121,7 @@ export function ServiceLanding({
         ))}
       </div>
 
-      {total > artisans.length ? (
+      {total > professionals.length ? (
         <div className="mt-6">
           <Button asChild variant="outline">
             <Link
@@ -167,7 +167,7 @@ export function ServiceLanding({
             Other trades{scope.state ? ` in ${locationLabel}` : ""}
           </h2>
           <p className="text-muted-foreground mt-1 text-sm">
-            Many artisans here do more than one thing.
+            Many professionals here do more than one thing.
           </p>
           <div className="mt-3 flex flex-wrap gap-2">
             {relatedTrades.map((item) => (
@@ -200,7 +200,7 @@ export function ServiceLanding({
           joining fee, no commission.
         </p>
         <Button asChild className="mt-4">
-          <Link href={ROUTES.joinAsArtisan}>List your services free</Link>
+          <Link href={ROUTES.listYourServices}>List your services free</Link>
         </Button>
       </section>
     </main>

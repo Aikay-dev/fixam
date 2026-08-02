@@ -41,7 +41,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     openGraph: { title, type: "website" },
     // An empty trade page is real and useful to visitors, but there is
     // nothing worth indexing until somebody lists. It becomes indexable on
-    // its own the moment an artisan is approved.
+    // its own the moment a professional is approved.
     robots:
       hasArtisans.total === 0
         ? { index: false, follow: true }
@@ -62,7 +62,7 @@ export default async function CategoryPage({ params }: Props) {
     limit: 12,
   });
 
-  // No artisans yet: render, don't 404.
+  // No professionals yet: render, don't 404.
   //
   // There are only ~82 of these and they're linked from the footer and home
   // page, so 404ing them makes the site look broken. They carry `noindex`
@@ -96,7 +96,7 @@ export default async function CategoryPage({ params }: Props) {
       />
       <ServiceLanding
         scope={scope}
-        artisans={results.artisans}
+        professionals={results.artisans}
         total={results.total}
         locationLabel="Nigeria"
         nearby={states}

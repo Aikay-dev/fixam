@@ -8,7 +8,7 @@ import type { ReactNode } from "react";
  *
  * Server components read the session directly via `auth()` and don't need
  * this. It exists for the few client components that must *change* the
- * session — notably adding the artisan role, which has to refresh the JWT
+ * session — notably adding the `artisan` role, which has to refresh the JWT
  * before navigating, or the user gets bounced out of the dashboard they were
  * just granted access to.
  *

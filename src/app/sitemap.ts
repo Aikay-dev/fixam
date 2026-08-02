@@ -11,7 +11,7 @@ import { Lga, State } from "@/models/location";
  * Dynamic sitemap.
  *
  * ⚠️ It only lists URLs that actually render. The /services/* pages 404 when
- * no approved artisan matches, so the sitemap is built from the SAME
+ * no approved professional matches, so the sitemap is built from the SAME
  * aggregation that decides whether those pages exist. Listing a URL that
  * 404s is worse than omitting it — it tells Google the site is full of dead
  * ends.
@@ -19,7 +19,7 @@ import { Lga, State } from "@/models/location";
 
 const SITE = clientEnv.NEXT_PUBLIC_SITE_URL.replace(/\/$/, "");
 
-// Revalidate hourly: new artisans get approved through the day, and a stale
+// Revalidate hourly: new professionals get approved through the day, and a stale
 // sitemap delays them being indexed.
 export const revalidate = 3600;
 
@@ -41,22 +41,22 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   try {
     await connectDB();
 
-    // --- Artisan profiles ------------------------------------------------
-    const artisans = await ArtisanProfile.find({ status: PUBLIC_ARTISAN_STATUS })
+    // --- Professional profiles ------------------------------------------------
+    const professionals = await ArtisanProfile.find({ status: PUBLIC_ARTISAN_STATUS })
       .select("slug updatedAt")
       .sort({ publishedAt: -1 })
       .limit(20000)
       .lean()
       .exec();
 
-    const artisanPages: MetadataRoute.Sitemap = artisans.map((a) => ({
-      url: `${SITE}${ROUTES.artisan(a.slug)}`,
+    const artisanPages: MetadataRoute.Sitemap = professionals.map((a) => ({
+      url: `${SITE}${ROUTES.professional(a.slug)}`,
       lastModified: a.updatedAt ?? now,
       changeFrequency: "weekly" as const,
       priority: 0.7,
     }));
 
-    // --- Category × location combinations that genuinely have artisans ----
+    // --- Category × location combinations that genuinely have professionals ----
     //
     // One aggregation produces every non-empty (trade, state, lga) triple.
     // Anything absent from these rows is a page that would 404, so it is
@@ -89,7 +89,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     const stateSlug = new Map(states.map((s) => [String(s._id), s.slug]));
     const lgaSlug = new Map(lgas.map((l) => [String(l._id), l.slug]));
 
-    // Deduplicate: many artisans roll up to the same URL.
+    // Deduplicate: many professionals roll up to the same URL.
     const servicePaths = new Set<string>();
 
     for (const row of combos) {

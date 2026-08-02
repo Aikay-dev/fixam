@@ -30,10 +30,10 @@ export default async function ProLayout({
   const user = await requireUser(ROUTES.pro);
 
   // Falls back to the database when the token says no, so someone who has
-  // just added artisan access isn't bounced out of the dashboard they were
+  // just added professional access isn't bounced out of the dashboard they were
   // granted a second ago by a token that hasn't refreshed yet.
   if (!(await userHasRole(user, "artisan"))) {
-    redirect(ROUTES.joinAsArtisan);
+    redirect(ROUTES.listYourServices);
   }
 
   if (!user.isVerified) {
@@ -43,7 +43,7 @@ export default async function ProLayout({
   }
 
   return (
-    <DashboardShell nav={nav} title="Artisan dashboard" homeHref="/pro">
+    <DashboardShell nav={nav} title="Professional dashboard" homeHref="/pro">
       {children}
     </DashboardShell>
   );

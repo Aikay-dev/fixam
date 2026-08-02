@@ -105,7 +105,7 @@ export function sendProfileApprovedEmail(
     type: "artisan-profile-approved",
     react: ArtisanProfileApproved({
       name: user.name,
-      profileUrl: url(ROUTES.artisan(user.slug)),
+      profileUrl: url(ROUTES.professional(user.slug)),
       dashboardUrl: url(ROUTES.pro),
     }),
   });

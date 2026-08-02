@@ -17,7 +17,7 @@ import { Lga, State } from "@/models/location";
 import { User } from "@/models/user";
 
 export const metadata: Metadata = {
-  title: "Artisans",
+  title: "Professionals",
   robots: { index: false, follow: false },
 };
 
@@ -30,9 +30,9 @@ const STATUS_STYLES: Record<string, string> = {
 };
 
 export default async function AdminArtisansPage(
-  props: PageProps<"/admin/artisans">,
+  props: PageProps<"/admin/professionals">,
 ) {
-  await requireAdmin("/admin/artisans");
+  await requireAdmin("/admin/professionals");
 
   const sp = await props.searchParams;
   const statusParam = Array.isArray(sp.status) ? sp.status[0] : sp.status;
@@ -112,7 +112,7 @@ export default async function AdminArtisansPage(
   return (
     <div className="grid gap-6">
       <div>
-        <h1 className="text-2xl font-bold tracking-tight">Artisans</h1>
+        <h1 className="text-2xl font-bold tracking-tight">Professionals</h1>
         <p className="text-muted-foreground text-sm">
           Nothing reaches the public directory or Google until it&apos;s
           approved here.
@@ -124,7 +124,7 @@ export default async function AdminArtisansPage(
         {ARTISAN_STATUSES.map((s) => (
           <Link
             key={s}
-            href={`/admin/artisans?status=${s}`}
+            href={`/admin/professionals?status=${s}`}
             className={`rounded-full border px-3 py-1.5 text-sm capitalize transition ${
               s === status
                 ? "border-primary bg-primary text-primary-foreground"
@@ -147,15 +147,15 @@ export default async function AdminArtisansPage(
             </p>
             <p className="text-muted-foreground mx-auto mt-1 max-w-sm text-sm text-balance">
               {status === "pending_review"
-                ? "The queue is clear. New submissions land here the moment an artisan sends one in."
+                ? "The queue is clear. New submissions land here the moment a professional sends one in."
                 : "Try another tab above."}
             </p>
             {/* An empty default tab shouldn't look like a broken page when
-                there are plenty of artisans one tab across. */}
+                there are plenty of professionals one tab across. */}
             {status === "pending_review" && (countByStatus.approved ?? 0) > 0 ? (
               <Button asChild variant="outline" className="mt-5">
-                <Link href="/admin/artisans?status=approved">
-                  See {countByStatus.approved} live artisan
+                <Link href="/admin/professionals?status=approved">
+                  See {countByStatus.approved} live professional
                   {countByStatus.approved === 1 ? "" : "s"}
                 </Link>
               </Button>
@@ -219,7 +219,7 @@ export default async function AdminArtisansPage(
                         {trades.length ? <span>{trades.join(" · ")}</span> : null}
                         {location ? <span>{location}</span> : null}
                         {/* Admins see the number: they need it to sanity-check
-                            that the artisan is reachable before approving. */}
+                            that the professional is reachable before approving. */}
                         {profile.phone ? (
                           <span className="flex items-center gap-1.5">
                             <Phone className="size-3.5" />
@@ -242,7 +242,7 @@ export default async function AdminArtisansPage(
 
                     {profile.status === "approved" ? (
                       <Link
-                        href={ROUTES.artisan(profile.slug)}
+                        href={ROUTES.professional(profile.slug)}
                         target="_blank"
                         className="text-muted-foreground hover:text-foreground flex items-center gap-1 text-xs"
                       >
@@ -281,7 +281,7 @@ export default async function AdminArtisansPage(
                       {profile.portfolio.length} work photo
                       {profile.portfolio.length === 1 ? "" : "s"} —{" "}
                       <Link
-                        href={ROUTES.artisan(profile.slug)}
+                        href={ROUTES.professional(profile.slug)}
                         target="_blank"
                         className="underline"
                       >
@@ -320,7 +320,7 @@ export default async function AdminArtisansPage(
             disabled={page <= 1}
           >
             {page > 1 ? (
-              <Link href={`/admin/artisans?status=${status}&page=${page - 1}`}>
+              <Link href={`/admin/professionals?status=${status}&page=${page - 1}`}>
                 Previous
               </Link>
             ) : (
@@ -339,7 +339,7 @@ export default async function AdminArtisansPage(
             disabled={page >= totalPages}
           >
             {page < totalPages ? (
-              <Link href={`/admin/artisans?status=${status}&page=${page + 1}`}>
+              <Link href={`/admin/professionals?status=${status}&page=${page + 1}`}>
                 Next
               </Link>
             ) : (

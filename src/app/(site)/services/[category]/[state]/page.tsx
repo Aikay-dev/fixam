@@ -74,7 +74,7 @@ export default async function CategoryStatePage({ params }: Props) {
       />
       <ServiceLanding
         scope={scope}
-        artisans={results.artisans}
+        professionals={results.artisans}
         total={results.total}
         locationLabel={locationLabel}
         nearby={lgas}

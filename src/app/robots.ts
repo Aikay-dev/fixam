@@ -57,7 +57,7 @@ export default function robots(): MetadataRoute.Robots {
           "/reset-password",
           // Filtered directory views are near-duplicates of pages that are
           // already indexed properly under /services/*.
-          "/artisans?",
+          "/professionals?",
         ],
       },
     ],

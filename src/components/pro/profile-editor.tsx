@@ -291,7 +291,7 @@ export function ProfileEditor({
 
       <SectionCard
         title="What you do"
-        description="Pick every trade you actually offer — customers search by trade."
+        description="Pick every service you actually offer — customers search by service."
         saving={saving === "trades"}
         saved={saved === "trades"}
         onSave={() =>
@@ -346,7 +346,7 @@ export function ProfileEditor({
 
         <p className="text-muted-foreground text-xs">
           {tradeIds.length} selected (up to 8). The first one you pick is your
-          main trade — it appears in your profile link.
+          main service — it appears in your profile link.
         </p>
       </SectionCard>
 
@@ -600,7 +600,7 @@ export function ProfileEditor({
               ? "Your profile is live. Any changes you save here appear straight away."
               : profile.status === "pending_review"
                 ? "Your profile is with our team. We'll email you when it's approved."
-                : "We check every artisan before they go live — that's what makes customers trust the people they find here."}
+                : "We check every professional before they go live — that's what makes customers trust the people they find here."}
           </p>
 
           {profile.status !== "approved" && profile.status !== "pending_review" ? (

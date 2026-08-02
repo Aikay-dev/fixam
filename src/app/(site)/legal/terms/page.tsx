@@ -29,8 +29,8 @@ export default function TermsPage() {
           </h2>
           <p className="mt-2">
             {SITE.name} is a directory that helps people in Nigeria find
-            artisans and tradespeople. We introduce the two sides. We are not a
-            party to any agreement you reach with an artisan, we do not employ
+            professionals and tradespeople. We introduce the two sides. We are not a
+            party to any agreement you reach with a professional, we do not employ
             them, and we do not carry out the work.
           </p>
         </section>
@@ -40,10 +40,10 @@ export default function TermsPage() {
             2. We do not handle payment
           </h2>
           <p className="mt-2">
-            All payment for a job happens directly between you and the artisan.
+            All payment for a job happens directly between you and the professional.
             Fixam never holds, processes or escrows your money and takes no
             commission. Because of that we cannot refund you for work, and any
-            dispute about money or workmanship is between you and the artisan.
+            dispute about money or workmanship is between you and the professional.
             We strongly recommend agreeing the price in writing before work
             begins.
           </p>
@@ -55,16 +55,16 @@ export default function TermsPage() {
           </h2>
           <p className="mt-2">
             You need a free account with a verified email address to see an
-            artisan&apos;s phone number. Keep your login details to yourself —
+            professional&apos;s phone number. Keep your login details to yourself —
             you are responsible for activity on your account. Don&apos;t create
-            accounts to harvest artisans&apos; contact details; we rate-limit
+            accounts to harvest professionals&apos; contact details; we rate-limit
             and suspend accounts that do.
           </p>
         </section>
 
         <section>
           <h2 className="text-foreground text-lg font-semibold">
-            4. If you list as an artisan
+            4. If you list as a professional
           </h2>
           <p className="mt-2">
             Everything on your profile must be true — your name, trades,
@@ -74,7 +74,7 @@ export default function TermsPage() {
             any profile, with reasons given.
           </p>
           <p className="mt-2">
-            Listing is free. If we ever introduce charges, existing artisans
+            Listing is free. If we ever introduce charges, existing professionals
             will be told well in advance and it will never be a commission on
             your work.
           </p>
@@ -83,7 +83,7 @@ export default function TermsPage() {
         <section>
           <h2 className="text-foreground text-lg font-semibold">5. Reviews</h2>
           <p className="mt-2">
-            Only a customer who has unlocked an artisan&apos;s contact details
+            Only a customer who has unlocked a professional&apos;s contact details
             can review them, once per contact. Reviews must describe your own
             genuine experience. We remove reviews that are fake, defamatory,
             or written to damage a competitor — but we do not remove a review
@@ -96,7 +96,7 @@ export default function TermsPage() {
             6. What we are responsible for
           </h2>
           <p className="mt-2">
-            We check that artisans are real and reachable and we show you what
+            We check that professionals are real and reachable and we show you what
             previous customers said. We do not guarantee the quality, safety,
             timeliness or legality of any work, and we are not liable for loss
             arising from a job arranged through Fixam. Choosing who to hire

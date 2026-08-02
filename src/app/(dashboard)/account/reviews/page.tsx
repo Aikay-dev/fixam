@@ -11,7 +11,7 @@ export default function AccountReviewsPage() {
   return (
     <ComingSoon
       title="My reviews"
-      description="Reviews you've left for artisans."
+      description="Reviews you've left for professionals."
       phase="Phase 6 — reviews"
     />
   );
