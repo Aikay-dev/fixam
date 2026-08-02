@@ -209,6 +209,16 @@ async function main() {
     ]);
 
     console.log(`(cleared ${stale.length} account(s) from previous runs)`);
+
+    // Deleting profiles straight from Mongo skips the admin route that
+    // maintains artisanCount — exactly how those counters drifted to
+    // "Plumber — 7 artisans" against a real total of 2. Same function the
+    // reconcile script uses, so this can't diverge from it.
+    const { reconcileCounts } = await import("../src/lib/artisan/counts");
+    const report = await reconcileCounts();
+    if (report.total > 0) {
+      console.log(`(realigned ${report.total} artisan counter(s))`);
+    }
   }
 
   // Reset the signup rate-limit bucket.

@@ -1,5 +1,6 @@
 import Link from "next/link";
 
+import { liveCategoryCounts } from "@/lib/artisan/counts";
 import { ROUTES, SITE } from "@/lib/constants";
 import { connectDB } from "@/lib/db";
 import { Category } from "@/models/category";
@@ -9,52 +10,56 @@ import { Category } from "@/models/category";
  * trades get a crawlable link from every page, which is how category landing
  * pages get discovered and ranked.
  */
+/**
+ * Trades that actually have someone come first, then common ones to fill.
+ *
+ * Ordering comes from live counts rather than the stored `artisanCount`,
+ * which drifts — see src/lib/artisan/counts.ts. The footer shows no numbers,
+ * so this only affects ordering, but ordering by a stale counter would still
+ * put empty trades above populated ones.
+ */
+const FALLBACK_TRADES = [
+  "plumber",
+  "electrician",
+  "carpenter",
+  "ac-installation-repair",
+  "painter",
+  "tiler",
+  "pop-ceiling",
+  "generator-repair",
+];
+
 async function getPopularCategories() {
   try {
     await connectDB();
 
-    // Trades that actually have someone come first. Sorting purely
-    // alphabetically would fill the footer with empty categories, which is
-    // both a poor first impression and a lot of internal links to pages
-    // carrying noindex.
-    const populated = await Category.find({
-      isActive: true,
-      parentId: { $ne: null },
-      artisanCount: { $gt: 0 },
-    })
-      .select("name slug artisanCount")
-      .sort({ artisanCount: -1, name: 1 })
-      .limit(8)
-      .lean()
-      .exec();
+    const [trades, counts] = await Promise.all([
+      Category.find({ isActive: true, parentId: { $ne: null } })
+        .select("name slug")
+        .lean()
+        .exec(),
+      liveCategoryCounts(),
+    ]);
 
-    if (populated.length >= 8) return populated;
+    const withCounts = trades.map((c) => ({
+      ...c,
+      count: counts.get(String(c._id)) ?? 0,
+    }));
 
-    // Early on there won't be eight. Top up with the most commonly searched
-    // trades so the footer still looks like a directory rather than a stub.
-    const fillers = await Category.find({
-      isActive: true,
-      parentId: { $ne: null },
-      slug: {
-        $in: [
-          "plumber",
-          "electrician",
-          "carpenter",
-          "ac-installation-repair",
-          "painter",
-          "tiler",
-          "pop-ceiling",
-          "generator-repair",
-        ],
-      },
-      _id: { $nin: populated.map((c) => c._id) },
-    })
-      .select("name slug artisanCount")
-      .limit(8 - populated.length)
-      .lean()
-      .exec();
+    const populated = withCounts
+      .filter((c) => c.count > 0)
+      .sort((a, b) => b.count - a.count || a.name.localeCompare(b.name));
 
-    return [...populated, ...fillers];
+    if (populated.length >= 8) return populated.slice(0, 8);
+
+    // Early on there won't be eight, so top up with the most commonly
+    // searched trades — the footer should read like a directory, not a stub.
+    const chosen = new Set(populated.map((c) => c.slug));
+    const fillers = FALLBACK_TRADES.map((slug) =>
+      withCounts.find((c) => c.slug === slug && !chosen.has(slug)),
+    ).filter((c): c is (typeof withCounts)[number] => Boolean(c));
+
+    return [...populated, ...fillers].slice(0, 8);
   } catch {
     // The footer must never take the page down.
     return [];

@@ -45,6 +45,14 @@ async function main() {
   }
   console.log(`\n${result.modifiedCount} profile(s) approved.`);
 
+  // Bulk-approving bypasses the admin route that maintains the denormalised
+  // artisanCount fields, so realign them rather than leaving them stale.
+  const { reconcileCounts } = await import("../src/lib/artisan/counts");
+  const report = await reconcileCounts();
+  if (report.total > 0) {
+    console.log(`Realigned ${report.total} artisan counter(s).`);
+  }
+
   await disconnectDB();
 }
 

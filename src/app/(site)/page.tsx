@@ -5,6 +5,7 @@ import Link from "next/link";
 import { ArtisanCard } from "@/components/artisans/artisan-card";
 import { HomeSearch } from "@/components/site/home-search";
 import { Button } from "@/components/ui/button";
+import { liveCategoryCounts } from "@/lib/artisan/counts";
 import { searchArtisans } from "@/lib/artisan/search";
 import { ROUTES, SITE } from "@/lib/constants";
 import { connectDB } from "@/lib/db";
@@ -19,15 +20,22 @@ export const metadata: Metadata = {
 export default async function HomePage() {
   await connectDB();
 
-  const [popular, featured] = await Promise.all([
+  const [allTrades, counts, featured] = await Promise.all([
     Category.find({ isActive: true, parentId: { $ne: null } })
-      .select("name slug icon artisanCount")
-      .sort({ artisanCount: -1, name: 1 })
-      .limit(12)
+      .select("name slug icon")
       .lean()
       .exec(),
+    // Live counts, never the stored artisanCount — see src/lib/artisan/counts.ts.
+    liveCategoryCounts(),
     searchArtisans({ sort: "recommended", limit: 6 }),
   ]);
+
+  // Trades with artisans first, then the rest alphabetically, so the grid
+  // leads with what a visitor can actually act on today.
+  const popular = allTrades
+    .map((c) => ({ ...c, count: counts.get(String(c._id)) ?? 0 }))
+    .sort((a, b) => b.count - a.count || a.name.localeCompare(b.name))
+    .slice(0, 12);
 
   return (
     <main>
@@ -71,10 +79,10 @@ export default async function HomePage() {
                 className="hover:border-primary/50 hover:bg-accent/40 rounded-lg border px-4 py-3 text-sm font-medium transition"
               >
                 {category.name}
-                {category.artisanCount > 0 ? (
+                {category.count > 0 ? (
                   <span className="text-muted-foreground block text-xs font-normal">
-                    {category.artisanCount} artisan
-                    {category.artisanCount === 1 ? "" : "s"}
+                    {category.count} artisan
+                    {category.count === 1 ? "" : "s"}
                   </span>
                 ) : null}
               </Link>
