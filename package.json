@@ -12,6 +12,7 @@
     "verify:indexes": "tsx scripts/verify-indexes.ts",
     "test:dedupe": "tsx scripts/test-lead-dedupe.ts",
     "test:scrape": "tsx scripts/test-scrape.ts",
+    "test:seo": "tsx --conditions=react-server scripts/test-seo.ts",
     "test:stage-two": "tsx --conditions=react-server scripts/test-stage-two-seam.ts",
     "test:journey": "tsx --conditions=react-server scripts/test-journey.ts",
     "test:admin-allowlist": "tsx --conditions=react-server scripts/test-admin-allowlist.ts",

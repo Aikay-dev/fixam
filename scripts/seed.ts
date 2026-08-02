@@ -64,7 +64,8 @@ async function main() {
             description: child.description ?? "",
             // Per-category copy, not a shared template — 90 pages of the same
             // boilerplate reads as thin content.
-            seoTitle: `Find a trusted ${child.name} near you | Fixam`,
+            // No "| Fixam" suffix — the app's title template appends it.
+            seoTitle: `Find a trusted ${child.name} near you`,
             seoDescription:
               child.description ??
               `Browse vetted ${child.name.toLowerCase()}s near you on Fixam. Real reviews, real photos, and free contact on WhatsApp.`,
