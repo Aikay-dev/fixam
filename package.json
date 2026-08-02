@@ -19,6 +19,7 @@
     "test:admin-allowlist": "tsx --conditions=react-server scripts/test-admin-allowlist.ts",
     "dev:approve": "tsx --conditions=react-server scripts/dev-approve.ts",
     "dev:seed-images": "tsx scripts/dev-seed-images.ts",
+    "upload:site-images": "tsx scripts/upload-site-images.ts",
     "make-admin": "tsx scripts/make-admin.ts",
     "email": "email dev --dir src/emails"
   },

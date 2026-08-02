@@ -26,19 +26,22 @@ export function HomeSearch() {
             : ROUTES.directory,
         );
       }}
-      className="mx-auto flex max-w-xl gap-2"
+      className="flex gap-2"
     >
       <Input
         value={query}
         onChange={(e) => setQuery(e.target.value)}
         placeholder="Plumber, AC repair, POP, generator…"
         aria-label="What do you need done?"
-        className="h-12 border-white/20 bg-white text-base text-neutral-900 placeholder:text-neutral-500"
+        // Solid white on the photograph rather than a translucent field:
+        // glass over a busy image makes placeholder text unreadable, and
+        // placeholders still need 4.5:1.
+        className="h-13 border-transparent bg-white text-base text-neutral-900 shadow-lg placeholder:text-neutral-500"
       />
       <Button
         type="submit"
         size="lg"
-        className="bg-gold hover:bg-gold/90 text-navy-deep h-12 shrink-0"
+        className="bg-gold hover:bg-gold/90 text-navy-deep h-13 shrink-0 px-6 font-semibold shadow-lg"
       >
         <Search className="size-4" />
         <span className="hidden sm:inline">Search</span>

@@ -7,10 +7,12 @@ const nextConfig: NextConfig = {
       { protocol: "https", hostname: "res.cloudinary.com" },
       { protocol: "https", hostname: "lh3.googleusercontent.com" }, // Google avatars
     ],
-    // Next 16 defaults qualities to [75]. Artisan portfolio shots are the
-    // main reason anyone trusts a profile, so allow a higher tier for those
-    // and a lower one for directory thumbnails on slow connections.
-    qualities: [50, 75, 90],
+    // Next 16 defaults qualities to [75] and REJECTS any other value rather
+    // than silently coercing it, so every quality used anywhere must be
+    // listed here. 50 for thumbnails, 70 for marketing tiles, 75 default,
+    // 90 for the portfolio lightbox — finished work is the main reason
+    // anyone trusts a profile, so that one gets the bytes.
+    qualities: [50, 70, 75, 90],
     formats: ["image/avif", "image/webp"],
   },
 
