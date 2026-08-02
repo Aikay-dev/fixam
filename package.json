@@ -18,6 +18,7 @@
     "test:journey": "tsx --conditions=react-server scripts/test-journey.ts",
     "test:admin-allowlist": "tsx --conditions=react-server scripts/test-admin-allowlist.ts",
     "dev:approve": "tsx --conditions=react-server scripts/dev-approve.ts",
+    "seed:demo": "tsx --conditions=react-server scripts/seed-demo-artisans.ts",
     "dev:seed-images": "tsx scripts/dev-seed-images.ts",
     "upload:site-images": "tsx scripts/upload-site-images.ts",
     "make-admin": "tsx scripts/make-admin.ts",

@@ -6,6 +6,10 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       { protocol: "https", hostname: "res.cloudinary.com" },
       { protocol: "https", hostname: "lh3.googleusercontent.com" }, // Google avatars
+      // Demo seed data only — free-licence Unsplash photos standing in for
+      // artisan portraits. Real artisan uploads always go through Cloudinary.
+      // Safe to remove once the demo directory is purged before launch.
+      { protocol: "https", hostname: "images.unsplash.com" },
     ],
     // Next 16 defaults qualities to [75] and REJECTS any other value rather
     // than silently coercing it, so every quality used anywhere must be
