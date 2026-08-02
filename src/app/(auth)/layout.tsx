@@ -1,5 +1,6 @@
 import Link from "next/link";
 
+import { Logo } from "@/components/brand/logo";
 import { SITE } from "@/lib/constants";
 
 export default function AuthLayout({
@@ -8,13 +9,8 @@ export default function AuthLayout({
   return (
     <div className="flex min-h-svh flex-col">
       <header className="flex items-center justify-center px-6 py-8">
-        <Link href="/" className="text-center">
-          <span className="text-primary block text-2xl font-bold tracking-tight">
-            {SITE.name}
-          </span>
-          <span className="text-muted-foreground block text-xs italic">
-            {SITE.tagline}
-          </span>
+        <Link href="/" aria-label={`${SITE.name} home`}>
+          <Logo showTagline />
         </Link>
       </header>
 

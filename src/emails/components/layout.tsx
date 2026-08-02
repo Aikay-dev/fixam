@@ -1,11 +1,14 @@
 import {
   Body,
+  Column,
   Container,
   Head,
   Hr,
   Html,
+  Img,
   Link,
   Preview,
+  Row,
   Section,
   Text,
 } from "@react-email/components";
@@ -53,11 +56,17 @@ const styles = {
     backgroundColor: brand.navy,
     padding: "28px 32px",
   },
+  /** Sized to the wordmark's cap height so the pair sits on one optical line. */
+  markCell: { width: "54px", verticalAlign: "middle" as const },
+  mark: { borderRadius: "9px", display: "block" },
   wordmark: {
     color: brand.white,
     fontSize: "26px",
-    fontWeight: 700,
-    letterSpacing: "0.5px",
+    // Title case and tight tracking to match the web lockup. Email clients
+    // fall back to system sans, so this won't be Archivo — but the shape of
+    // the word should still read as the same brand.
+    fontWeight: 800,
+    letterSpacing: "-0.5px",
     margin: 0,
   },
   tagline: {
@@ -101,8 +110,21 @@ export function EmailLayout({
       <Body style={styles.body}>
         <Container style={styles.container}>
           <Section style={styles.header}>
-            <Text style={styles.wordmark}>FIXAM</Text>
-            <Text style={styles.tagline}>Get am done. Fix am fast.</Text>
+            <Row>
+              <Column style={styles.markCell}>
+                <Img
+                  src={`${site}/logo-mark.png`}
+                  width="40"
+                  height="40"
+                  alt=""
+                  style={styles.mark}
+                />
+              </Column>
+              <Column>
+                <Text style={styles.wordmark}>Fixam</Text>
+                <Text style={styles.tagline}>Get am done. Fix am fast.</Text>
+              </Column>
+            </Row>
           </Section>
 
           <Section style={styles.content}>{children}</Section>

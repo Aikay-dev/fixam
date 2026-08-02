@@ -15,7 +15,10 @@ import { SITE_IMAGES } from "@/data/site-images";
 import { Category } from "@/models/category";
 
 export const metadata: Metadata = {
-  title: "Fixam — Nigeria's Trusted Artisan Marketplace",
+  // `absolute` opts out of the root layout's "%s | Fixam" template, which
+  // would otherwise render "Fixam — ... | Fixam" on the one page whose title
+  // already leads with the brand.
+  title: { absolute: "Fixam — Nigeria's Trusted Artisan Marketplace" },
   description: SITE.description,
   alternates: { canonical: "/" },
 };

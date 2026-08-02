@@ -9,6 +9,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { Logo } from "@/components/brand/logo";
 import { getSessionUser } from "@/lib/auth/session";
 import { ROUTES, SITE } from "@/lib/constants";
 
@@ -20,10 +21,8 @@ export async function SiteHeader() {
   return (
     <header className="bg-background/95 supports-[backdrop-filter]:bg-background/80 sticky top-0 z-40 border-b backdrop-blur">
       <div className="mx-auto flex h-16 max-w-6xl items-center gap-3 px-4 sm:px-6">
-        <Link href="/" className="shrink-0">
-          <span className="text-primary text-xl font-bold tracking-tight">
-            {SITE.name}
-          </span>
+        <Link href="/" className="shrink-0" aria-label={`${SITE.name} home`}>
+          <Logo />
         </Link>
 
         <nav className="ml-4 hidden items-center gap-1 md:flex">

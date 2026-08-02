@@ -1,5 +1,6 @@
 import Link from "next/link";
 
+import { Logo } from "@/components/brand/logo";
 import { liveCategoryCounts } from "@/lib/artisan/counts";
 import { ROUTES, SITE } from "@/lib/constants";
 import { connectDB } from "@/lib/db";
@@ -75,10 +76,7 @@ export async function SiteFooter() {
       <div className="mx-auto max-w-6xl px-4 py-12 sm:px-6">
         <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
           <div>
-            <span className="text-primary text-lg font-bold">{SITE.name}</span>
-            <p className="text-muted-foreground mt-1 text-sm italic">
-              {SITE.tagline}
-            </p>
+            <Logo showTagline />
             <p className="text-muted-foreground mt-3 text-sm">
               Nigeria&apos;s trusted artisan marketplace. Free for customers,
               free for artisans.

@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState, type ReactNode } from "react";
 
+import { Logo } from "@/components/brand/logo";
 import { Button } from "@/components/ui/button";
 import { SITE } from "@/lib/constants";
 import { cn } from "@/lib/utils";
@@ -71,12 +72,12 @@ export function DashboardShell({
       {/* Desktop sidebar */}
       <aside className="bg-sidebar border-sidebar-border hidden w-64 shrink-0 flex-col border-r lg:flex">
         <div className="border-sidebar-border border-b px-5 py-5">
-          <Link href="/" className="block">
-            <span className="text-sidebar-foreground text-xl font-bold tracking-tight">
-              {SITE.name}
-            </span>
+          <Link href="/" className="block" aria-label={`${SITE.name} home`}>
+            <Logo onDark />
           </Link>
-          <span className="text-sidebar-foreground/60 text-xs">{title}</span>
+          <span className="text-sidebar-foreground/60 mt-1 block text-xs">
+            {title}
+          </span>
         </div>
         <div className="flex-1 overflow-y-auto p-3">{navList}</div>
       </aside>
@@ -92,10 +93,8 @@ export function DashboardShell({
           <aside className="bg-sidebar absolute inset-y-0 left-0 flex w-72 flex-col">
             <div className="border-sidebar-border flex items-center justify-between border-b px-5 py-4">
               <div>
-                <span className="text-sidebar-foreground text-xl font-bold">
-                  {SITE.name}
-                </span>
-                <span className="text-sidebar-foreground/60 block text-xs">
+                <Logo onDark />
+                <span className="text-sidebar-foreground/60 mt-1 block text-xs">
                   {title}
                 </span>
               </div>
