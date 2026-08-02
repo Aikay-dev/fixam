@@ -5,14 +5,10 @@ import Link from "next/link";
 
 import { ArtisanActions } from "@/components/admin/artisan-actions";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { requireAdmin } from "@/lib/auth/session";
-import {
-  ARTISAN_STATUSES,
-  PAGE_SIZE,
-  ROUTES,
-  type ArtisanStatus,
-} from "@/lib/constants";
+import { ARTISAN_STATUSES, ROUTES, type ArtisanStatus } from "@/lib/constants";
 import { connectDB } from "@/lib/db";
 import { formatPhoneForDisplay } from "@/lib/phone";
 import { ArtisanProfile } from "@/models/artisan-profile";
@@ -48,14 +44,29 @@ export default async function AdminArtisansPage(
     ? (statusParam as ArtisanStatus)
     : "pending_review";
 
+  const page = Math.max(1, Number(Array.isArray(sp.page) ? sp.page[0] : sp.page) || 1);
+
+  /**
+   * Work photos are only rendered while a decision is outstanding.
+   *
+   * They're essential for judging a submission and pure weight afterwards:
+   * at 50 profiles with six photos each this page was requesting 228 images
+   * at once, which loads as a wall of grey boxes. Reviewing tabs get the
+   * photos; browsing tabs get the avatar only.
+   */
+  const needsReview = status === "pending_review" || status === "rejected";
+  const perPage = needsReview ? 12 : 24;
+
   await connectDB();
 
-  const [profiles, counts] = await Promise.all([
+  const [profiles, total, counts] = await Promise.all([
     ArtisanProfile.find({ status })
       .sort({ submittedAt: 1, createdAt: 1 })
-      .limit(PAGE_SIZE.adminTable)
+      .skip((page - 1) * perPage)
+      .limit(perPage)
       .lean()
       .exec(),
+    ArtisanProfile.countDocuments({ status }),
     ArtisanProfile.aggregate([
       { $group: { _id: "$status", count: { $sum: 1 } } },
     ]).exec(),
@@ -63,7 +74,9 @@ export default async function AdminArtisansPage(
 
   const countByStatus = Object.fromEntries(
     counts.map((c: { _id: string; count: number }) => [c._id, c.count]),
-  );
+  ) as Record<string, number>;
+
+  const totalPages = Math.max(1, Math.ceil(total / perPage));
 
   // Resolve the referenced names in one round trip each.
   const [owners, categories, states, lgas] = await Promise.all([
@@ -127,12 +140,26 @@ export default async function AdminArtisansPage(
       {profiles.length === 0 ? (
         <Card>
           <CardContent className="py-16 text-center">
-            <p className="font-medium">Nothing here</p>
-            <p className="text-muted-foreground mt-1 text-sm">
+            <p className="font-medium">
               {status === "pending_review"
-                ? "No profiles waiting for review. "
-                : `No ${status.replace("_", " ")} profiles.`}
+                ? "Nothing waiting for review"
+                : `No ${status.replace("_", " ")} profiles`}
             </p>
+            <p className="text-muted-foreground mx-auto mt-1 max-w-sm text-sm text-balance">
+              {status === "pending_review"
+                ? "The queue is clear. New submissions land here the moment an artisan sends one in."
+                : "Try another tab above."}
+            </p>
+            {/* An empty default tab shouldn't look like a broken page when
+                there are plenty of artisans one tab across. */}
+            {status === "pending_review" && (countByStatus.approved ?? 0) > 0 ? (
+              <Button asChild variant="outline" className="mt-5">
+                <Link href="/admin/artisans?status=approved">
+                  See {countByStatus.approved} live artisan
+                  {countByStatus.approved === 1 ? "" : "s"}
+                </Link>
+              </Button>
+            ) : null}
           </CardContent>
         </Card>
       ) : (
@@ -231,7 +258,7 @@ export default async function AdminArtisansPage(
                     </p>
                   ) : null}
 
-                  {profile.portfolio?.length ? (
+                  {needsReview && profile.portfolio?.length ? (
                     <div className="flex gap-2 overflow-x-auto">
                       {profile.portfolio.slice(0, 6).map((photo, i) => (
                         <div
@@ -243,11 +270,24 @@ export default async function AdminArtisansPage(
                             alt=""
                             fill
                             sizes="80px"
+                            quality={50}
                             className="object-cover"
                           />
                         </div>
                       ))}
                     </div>
+                  ) : profile.portfolio?.length ? (
+                    <p className="text-muted-foreground text-xs">
+                      {profile.portfolio.length} work photo
+                      {profile.portfolio.length === 1 ? "" : "s"} —{" "}
+                      <Link
+                        href={ROUTES.artisan(profile.slug)}
+                        target="_blank"
+                        className="underline"
+                      >
+                        view on their profile
+                      </Link>
+                    </p>
                   ) : null}
 
                   {profile.rejectionReason ? (
@@ -267,6 +307,47 @@ export default async function AdminArtisansPage(
           })}
         </div>
       )}
+
+      {totalPages > 1 ? (
+        <nav
+          className="flex items-center justify-center gap-3"
+          aria-label="Pagination"
+        >
+          <Button
+            asChild={page > 1}
+            variant="outline"
+            size="sm"
+            disabled={page <= 1}
+          >
+            {page > 1 ? (
+              <Link href={`/admin/artisans?status=${status}&page=${page - 1}`}>
+                Previous
+              </Link>
+            ) : (
+              <span>Previous</span>
+            )}
+          </Button>
+
+          <span className="text-muted-foreground text-sm">
+            Page {page} of {totalPages} · {total} total
+          </span>
+
+          <Button
+            asChild={page < totalPages}
+            variant="outline"
+            size="sm"
+            disabled={page >= totalPages}
+          >
+            {page < totalPages ? (
+              <Link href={`/admin/artisans?status=${status}&page=${page + 1}`}>
+                Next
+              </Link>
+            ) : (
+              <span>Next</span>
+            )}
+          </Button>
+        </nav>
+      ) : null}
     </div>
   );
 }
