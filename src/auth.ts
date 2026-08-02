@@ -39,8 +39,13 @@ declare module "@auth/core/jwt" {
     roles: Role[];
     isVerified: boolean;
     status: string;
+    /** When roles/status were last read from the database. */
+    refreshedAt?: number;
   }
 }
+
+/** How long a token may cache roles and status before re-reading them. */
+const ROLE_REFRESH_MS = 5 * 60 * 1000;
 
 const credentialsSchema = z.object({
   email: z.string().email(),
@@ -155,10 +160,24 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     },
 
     async jwt({ token, user, trigger }) {
-      // On first sign-in, or when the client calls `update()`, reload the
-      // authoritative record. Roles and status change from the admin panel,
-      // and a stale token must not keep a suspended user signed in.
-      const shouldRefresh = Boolean(user) || trigger === "update" || !token.id;
+      // Reload the authoritative record on first sign-in, when the client
+      // calls `update()`, or once the cached copy goes stale.
+      //
+      // The staleness window matters: roles change while a user is signed in
+      // — a customer adds an artisan profile, an admin suspends someone, the
+      // allow-list changes. Without it those only take effect after a full
+      // sign-out, which is a bad experience and, for a suspension, a
+      // genuine security gap.
+      //
+      // Not refreshed on every request: the jwt callback runs on every
+      // `auth()` call, so that would be a database round trip per protected
+      // page and per API call.
+      const stale =
+        !token.refreshedAt ||
+        Date.now() - (token.refreshedAt as number) > ROLE_REFRESH_MS;
+
+      const shouldRefresh =
+        Boolean(user) || trigger === "update" || !token.id || stale;
 
       if (shouldRefresh) {
         const email = (user?.email ?? token.email)?.toLowerCase();
@@ -180,6 +199,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             // `emailVerified: Date` on its User type and the two collide.
             token.isVerified = Boolean(record.emailVerified);
             token.status = record.status;
+            token.refreshedAt = Date.now();
           }
         }
       }

@@ -198,7 +198,10 @@ export function SignupForm({
         ) : (
           <>
             Are you an artisan?{" "}
-            <Link href={ROUTES.joinAsArtisan} className="underline">
+            {/* Straight to artisan signup — the reader is demonstrably signed
+                out, so routing via /become-an-artisan would only bounce them
+                back here. */}
+            <Link href="/signup?role=artisan" className="underline">
               List your services free
             </Link>
           </>

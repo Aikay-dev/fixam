@@ -10,6 +10,7 @@ import {
 import { redirect } from "next/navigation";
 
 import { DashboardShell, type NavItem } from "@/components/dashboard/shell";
+import { userHasRole } from "@/lib/auth/roles";
 import { requireUser } from "@/lib/auth/session";
 import { ROUTES } from "@/lib/constants";
 
@@ -28,9 +29,10 @@ export default async function ProLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   const user = await requireUser(ROUTES.pro);
 
-  // Anyone can become an artisan — send a plain customer to the artisan
-  // signup rather than a dead end.
-  if (!user.roles?.includes("artisan")) {
+  // Falls back to the database when the token says no, so someone who has
+  // just added artisan access isn't bounced out of the dashboard they were
+  // granted a second ago by a token that hasn't refreshed yet.
+  if (!(await userHasRole(user, "artisan"))) {
     redirect(ROUTES.joinAsArtisan);
   }
 

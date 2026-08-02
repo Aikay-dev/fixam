@@ -149,7 +149,13 @@ export const ROUTES = {
     `/services/${category}/${state}/${lga}`,
   login: "/login",
   signup: "/signup",
-  joinAsArtisan: "/signup?role=artisan",
+  /**
+   * Every "list your services free" CTA points here, never straight at
+   * /signup. This route works out whether the visitor needs to sign up, add
+   * the artisan role to an existing account, or just go to their profile —
+   * linking to /signup was a dead end for anyone already signed in.
+   */
+  joinAsArtisan: "/become-an-artisan",
   verifyEmail: "/verify-email",
   account: "/account",
   accountContacts: "/account/contacts",
