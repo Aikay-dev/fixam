@@ -3,6 +3,7 @@ import { MessageCircle, Phone } from "lucide-react";
 import Link from "next/link";
 
 import { RatingStars } from "@/components/artisans/rating-stars";
+import { ReviewForm } from "@/components/reviews/review-form";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { requireUser } from "@/lib/auth/session";
@@ -157,13 +158,17 @@ export default async function AccountContactsPage() {
                     </div>
                   ) : null}
 
-                  {!contact.reviewId ? (
+                  {contact.reviewId ? (
                     <p className="text-muted-foreground border-t pt-3 text-xs">
-                      Job finished? You&apos;ll be able to leave a review
-                      shortly — reviews here only come from customers who
-                      actually made contact.
+                      You&apos;ve reviewed this contact. Thanks — it&apos;s the
+                      most useful thing you can do for the next customer.
                     </p>
-                  ) : null}
+                  ) : (
+                    <ReviewForm
+                      leadId={String(contact._id)}
+                      professionalName={contact.displayName}
+                    />
+                  )}
                 </CardContent>
               </Card>
             );

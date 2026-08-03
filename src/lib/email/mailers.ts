@@ -1,3 +1,4 @@
+import ArtisanNewReview from "@/emails/artisan-new-review";
 import ArtisanProfileApproved from "@/emails/artisan-profile-approved";
 import ArtisanProfileRejected from "@/emails/artisan-profile-rejected";
 import ArtisanProfileSubmitted from "@/emails/artisan-profile-submitted";
@@ -135,6 +136,25 @@ export function sendProfileSubmittedEmail(user: Recipient) {
     subject: "We've got your Fixam profile",
     type: "artisan-profile-submitted",
     react: ArtisanProfileSubmitted({ name: user.name }),
+  });
+}
+
+export function sendNewReviewEmail(
+  user: Recipient & { reviewerFirstName: string; rating: number; body: string },
+) {
+  queueEmail({
+    userId: user.userId,
+    to: user.email,
+    subject: `${user.reviewerFirstName} left you a ${user.rating}-star review`,
+    type: "artisan-new-review",
+    react: ArtisanNewReview({
+      artisanName: user.name ?? "there",
+      reviewerFirstName: user.reviewerFirstName,
+      rating: user.rating,
+      body: user.body,
+      reviewsUrl: url(ROUTES.proReviews),
+    }),
+    payload: { rating: user.rating },
   });
 }
 

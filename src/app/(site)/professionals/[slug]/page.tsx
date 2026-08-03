@@ -13,6 +13,7 @@ import { notFound } from "next/navigation";
 import { ArtisanPortfolio } from "@/components/artisans/artisan-portfolio";
 import { ContactGate } from "@/components/artisans/contact-gate";
 import { RatingStars } from "@/components/artisans/rating-stars";
+import { RatingBreakdown, ReviewList } from "@/components/reviews/review-list";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
@@ -21,6 +22,7 @@ import { getSessionUser } from "@/lib/auth/session";
 import { ROUTES } from "@/lib/constants";
 import { connectDB } from "@/lib/db";
 import { clientEnv } from "@/lib/env";
+import { getProfileReviews } from "@/lib/reviews/queries";
 import { Category } from "@/models/category";
 import { Lga, State } from "@/models/location";
 
@@ -66,7 +68,7 @@ export default async function ArtisanProfilePage({ params }: Props) {
 
   await connectDB();
 
-  const [trades, state, lga, user] = await Promise.all([
+  const [trades, state, lga, user, reviewPage] = await Promise.all([
     Category.find({ _id: { $in: professional.tradeIds } })
       .select("name slug")
       .lean()
@@ -78,6 +80,7 @@ export default async function ArtisanProfilePage({ params }: Props) {
       ? Lga.findById(professional.location.lgaId).select("name").lean().exec()
       : null,
     getSessionUser(),
+    getProfileReviews(professional.id, { limit: 10 }),
   ]);
 
   const locationLabel = [professional.location.areaText, lga?.name, state?.name]
@@ -91,7 +94,9 @@ export default async function ArtisanProfilePage({ params }: Props) {
   }[professional.respondsWithin] ?? "Usually replies the same day";
 
   // Structured data. AggregateRating is only emitted when reviews exist —
-  // Google penalises rating markup with no underlying reviews.
+  // Google penalises rating markup with no underlying reviews. Now that the
+  // rating is recomputed from actual Review documents, `rating.count > 0`
+  // genuinely means there are reviews on the page to back it.
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
@@ -114,6 +119,24 @@ export default async function ArtisanProfilePage({ params }: Props) {
             bestRating: 5,
             worstRating: 1,
           },
+        }
+      : {}),
+    // Individual reviews, capped at five. Google only surfaces a handful and
+    // the full list would bloat every profile's HTML for no gain.
+    ...(reviewPage.reviews.length > 0
+      ? {
+          review: reviewPage.reviews.slice(0, 5).map((r) => ({
+            "@type": "Review",
+            reviewRating: {
+              "@type": "Rating",
+              ratingValue: r.rating,
+              bestRating: 5,
+              worstRating: 1,
+            },
+            author: { "@type": "Person", name: r.authorName },
+            datePublished: r.createdAt.slice(0, 10),
+            reviewBody: r.body,
+          })),
         }
       : {}),
     knowsAbout: trades.map((t) => t.name),
@@ -268,7 +291,7 @@ export default async function ArtisanProfilePage({ params }: Props) {
             <h2 className="mb-3 text-lg font-semibold">
               Reviews{professional.rating.count ? ` (${professional.rating.count})` : ""}
             </h2>
-            {professional.rating.count === 0 ? (
+            {reviewPage.total === 0 ? (
               <Card>
                 <CardContent className="py-8 text-center">
                   <p className="text-muted-foreground text-sm">
@@ -279,9 +302,19 @@ export default async function ArtisanProfilePage({ params }: Props) {
                 </CardContent>
               </Card>
             ) : (
-              <p className="text-muted-foreground text-sm">
-                Review list arrives in the next build phase.
-              </p>
+              <div className="grid gap-5">
+                <RatingBreakdown
+                  breakdown={professional.rating.breakdown}
+                  total={professional.rating.count}
+                />
+                <ReviewList reviews={reviewPage.reviews} />
+                {reviewPage.hasMore ? (
+                  <p className="text-muted-foreground text-sm">
+                    Showing the {reviewPage.reviews.length} most recent of{" "}
+                    {reviewPage.total}.
+                  </p>
+                ) : null}
+              </div>
             )}
           </section>
         </div>

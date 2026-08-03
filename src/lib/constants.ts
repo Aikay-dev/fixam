@@ -172,6 +172,8 @@ export const ROUTES = {
   pro: "/pro",
   proProfile: "/pro/profile",
   proLeads: "/pro/leads",
+  proReviews: "/pro/reviews",
+  accountReviews: "/account/reviews",
   admin: "/admin",
 } as const;
 

@@ -25,7 +25,11 @@ export function RatingStars({
 
   const percent = Math.max(0, Math.min(100, (value / 5) * 100));
 
-  if (!count) {
+  // Only a rating SUMMARY can be "no reviews yet". With showCount={false} the
+  // caller is rendering the stars of one individual review, where there is no
+  // count to speak of — falling through to the empty state there printed
+  // "No reviews yet" next to every review on the page.
+  if (!count && showCount) {
     return (
       <span className={cn("text-muted-foreground", textSize, className)}>
         No reviews yet
@@ -65,8 +69,8 @@ export function RatingStars({
       ) : null}
 
       <span className="sr-only">
-        Rated {value.toFixed(1)} out of 5 from {count} review
-        {count === 1 ? "" : "s"}
+        Rated {value.toFixed(1)} out of 5
+        {count === undefined ? "" : ` from ${count} review${count === 1 ? "" : "s"}`}
       </span>
     </span>
   );
